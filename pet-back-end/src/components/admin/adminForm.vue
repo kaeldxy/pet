@@ -1,6 +1,6 @@
 <template>
-  <div class="regPage">
-    <a-form-model class="regForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+  <div class="adminFormBox">
+    <a-form-model class="adminForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-model-item label="账号">
         <a-input v-model="form.account" />
       </a-form-model-item>
@@ -31,27 +31,17 @@
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">Create</a-button>
         <a-button style="margin-left: 10px;">Cancel</a-button>
-        <router-link to="/" style="margin-left: 10px;">去登录</router-link>
       </a-form-model-item>
     </a-form-model>
   </div>
 </template>
 <script>
-import adminService from "../service/admin";
+import adminService from "../../service/admin.js";
 export default {
   data() {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      form: {
-        account: "", // 账号
-        password: "", // 密码
-        name: "", // 姓名
-        age: "", // 年龄
-        gender: "male", // 性别
-        phone: "", // 手机号
-        position: "plat" // 职位（平台管理员/门店管理员） plat / shop
-      },
       rules: {
         account: { rule: /\w+/, text: "请填写正确的账号（数字字母构成）" },
         password: { rule: /\w+/, text: "请填写正确的密码（数字字母构成）" },
@@ -66,6 +56,28 @@ export default {
       }
     };
   },
+  props: {
+    successTo: {
+        type: Object,
+        default(){
+            return {name: 'adminList'}
+        }
+    },
+    form: {
+      type: Object,
+      default() {
+        return {
+          account: "", // 账号
+          password: "", // 密码
+          name: "", // 姓名
+          age: "", // 年龄
+          gender: "male", // 性别
+          phone: "", // 手机号
+          position: "plat" // 职位（平台管理员/门店管理员） plat / shop
+        };
+      }
+    }
+  },
   methods: {
     async onSubmit() {
       const state = Object.entries(this.form).some(([key, val]) => {
@@ -75,10 +87,13 @@ export default {
         }
       });
       if (!state) {
-        const {statu, msg} = await adminService.reg(this.form);
-        this.$notification.open({message: '注册信息', description: msg + (statu ? ',请登录' : '')})
-        if(statu){
-          this.$router.replace('/')
+        const { statu, msg } = await adminService.reg(this.form);
+        this.$notification.open({
+          message: "注册信息",
+          description: msg + (statu ? ",请登录" : "")
+        });
+        if (statu) {
+          this.$router.replace(this.successTo);
         }
       }
     }
@@ -87,13 +102,14 @@ export default {
 </script>
 
 <style scoped>
-.regPage {
-  height: 100vh;
+.adminFormBox {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.regForm {
+.adminForm {
   width: 45%;
 }
 </style>

@@ -6,8 +6,11 @@ import Info from '../views/Info.vue'
 import GoodList from '../views/main/good/goodList.vue'
 import PetList from '../views/main/pet/petList.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
-import ShopList from '../views/main/shop/shopList.vue'
-import Content from '../views/main/content.vue'
+import ShopList from '../views/main/shop/ShopList.vue'
+import Content from '../views/main/Content.vue'
+import { notification } from 'ant-design-vue'
+
+import adminList from '../views/main/admin/adminList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,45 +20,65 @@ const routes = [
     component: Login
   },
   {
-    path: '/Registe',
+    path: '/registe',
     name: 'Registe',
     component: Registe
   },
   {
     path: '/info',
-    name: 'info',
+    name: 'Info',
     component: Info,
+    beforeEnter: (to, from, next) => {
+      console.log(to, from);
+      if (!window.localStorage['_k']) {
+        notification.open({
+          message: 'Unauthorized',
+          description: '当前您没有权限访问，请登录',
+        })
+        next('/')
+      } else {
+        next()
+      }
+    },
     children: [
       {
-        path: 'good',
-        name: 'goodmain',
+        path: 'admin',
+        name: 'admin',
         component: Content,
         children: [
-          { path: 'list', name: 'goodList', component: GoodList },
+          { path: 'list', name: 'adminList', component: adminList }
+        ]
+      },
+      {
+        path: 'good',
+        name: 'good',
+        component: Content,
+        children: [
+          { path: 'list', name: 'GoodList', component: GoodList },
         ]
       },
       {
         path: 'pet',
-        name: 'petmain',
+        name: 'pet',
         component: Content,
         children: [
-          { path: 'list', name: 'petList', component: PetList }
+          { path: 'list', name: 'PetList', component: PetList }
         ]
       },
       {
         path: 'shop',
-        name: 'shopmain',
+        name: 'shop',
         component: Content,
         children: [
-          { path: 'list', name: 'shopList', component: ShopList }
+          { path: 'list', name: 'ShopList', component: ShopList }
         ]
       },
       {
         path: 'mysever',
-        name: 'mysevermain',
+        name: 'mysever',
         component: Content,
         children: [
-          { path: 'list', name: 'myseverList', component: MyseverList }
+          { path: 'list', name: 'MyseverList', component: MyseverList }
         ]
       },
     ]

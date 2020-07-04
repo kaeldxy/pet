@@ -1,101 +1,99 @@
 <template>
   <div class="regPage">
     <a-form-model class="regForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-    <a-form-model-item label="Activity name">
-      <a-input v-model="form.name" />
-    </a-form-model-item>
-    <a-form-model-item label="Activity zone">
-      <a-select v-model="form.region" placeholder="please select your zone">
-        <a-select-option value="shanghai">
-          Zone one
-        </a-select-option>
-        <a-select-option value="beijing">
-          Zone two
-        </a-select-option>
-      </a-select>
-    </a-form-model-item>
-    <a-form-model-item label="Activity time">
-      <a-date-picker
-        v-model="form.date1"
-        show-time
-        type="date"
-        placeholder="Pick a date"
-        style="width: 100%;"
-      />
-    </a-form-model-item>
-    <a-form-model-item label="Instant delivery">
-      <a-switch v-model="form.delivery" />
-    </a-form-model-item>
-    <a-form-model-item label="Activity type">
-      <a-checkbox-group v-model="form.type">
-        <a-checkbox value="1" name="type">
-          Online
-        </a-checkbox>
-        <a-checkbox value="2" name="type">
-          Promotion
-        </a-checkbox>
-        <a-checkbox value="3" name="type">
-          Offline
-        </a-checkbox>
-      </a-checkbox-group>
-    </a-form-model-item>
-    <a-form-model-item label="Resources">
-      <a-radio-group v-model="form.resource">
-        <a-radio value="1">
-          Sponsor
-        </a-radio>
-        <a-radio value="2">
-          Venue
-        </a-radio>
-      </a-radio-group>
-    </a-form-model-item>
-    <a-form-model-item label="Activity form">
-      <a-input v-model="form.desc" type="textarea" />
-    </a-form-model-item>
-    <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="onSubmit">
-        Create
-      </a-button>
-      <a-button style="margin-left: 10px;">
-        Cancel
-      </a-button>
-    </a-form-model-item>
-  </a-form-model>
+      <a-form-model-item label="账号">
+        <a-input v-model="form.account" />
+      </a-form-model-item>
+      <a-form-model-item label="密码">
+        <a-input v-model="form.password" />
+      </a-form-model-item>
+      <a-form-model-item label="姓名">
+        <a-input v-model="form.name" />
+      </a-form-model-item>
+      <a-form-model-item label="年龄">
+        <a-input v-model="form.age" />
+      </a-form-model-item>
+      <a-form-model-item label="性别">
+        <a-radio-group v-model="form.gender">
+          <a-radio value="male">男</a-radio>
+          <a-radio value="female">女</a-radio>
+        </a-radio-group>
+      </a-form-model-item>
+      <a-form-model-item label="电话">
+        <a-input v-model="form.phone" />
+      </a-form-model-item>
+      <a-form-model-item label="注册身份">
+        <a-radio-group v-model="form.position">
+          <a-radio value="plat">平台管理员</a-radio>
+          <a-radio value="shop">门店管理员</a-radio>
+        </a-radio-group>
+      </a-form-model-item>
+      <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
+        <a-button type="primary" @click="onSubmit">Create</a-button>
+        <a-button style="margin-left: 10px;">Cancel</a-button>
+        <router-link to="/" style="margin-left: 10px;">去登录</router-link>
+      </a-form-model-item>
+    </a-form-model>
   </div>
 </template>
 <script>
+import adminService from "../service/admin";
 export default {
   data() {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       form: {
-        name: '',
-        region: undefined,
-        date1: undefined,
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
+        account: "", // 账号
+        password: "", // 密码
+        name: "", // 姓名
+        age: "", // 年龄
+        gender: "male", // 性别
+        phone: "", // 手机号
+        position: "plat" // 职位（平台管理员/门店管理员） plat / shop
       },
+      rules: {
+        account: { rule: /\w+/, text: "请填写正确的账号（数字字母构成）" },
+        password: { rule: /\w+/, text: "请填写正确的密码（数字字母构成）" },
+        name: { rule: /.+/, text: "请填写正确的昵称（至少一位）" },
+        age: { rule: /\d+/, text: "请填写正确的年龄（数字）" },
+        gender: { rule: /^(male|female)$/, text: "请填写正确的性别" },
+        phone: {
+          rule: /^1[3-9]\d{9}$/,
+          text: "请填写正确的手机号码"
+        },
+        position: { rule: /^(plat|shop)$/, text: "请填写正确的（状态）" }
+      }
     };
   },
   methods: {
-    onSubmit() {
-      console.log('submit!', this.form);
-    },
-  },
+    async onSubmit() {
+      const state = Object.entries(this.form).some(([key, val]) => {
+        if (!this.rules[key].rule.test(val)) {
+          this.$message.info(this.rules[key].text, 0.4);
+          return true;
+        }
+      });
+      if (!state) {
+        const {statu, msg} = await adminService.reg(this.form);
+        this.$notification.open({message: '注册信息', description: msg + (statu ? ',请登录' : '')})
+        if(statu){
+          this.$router.replace('/')
+        }
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
-.regPage{
+.regPage {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.regForm{
-  width: 800px;
+.regForm {
+  width: 45%;
 }
 </style>

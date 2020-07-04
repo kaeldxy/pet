@@ -7,7 +7,7 @@ import GoodList from '../views/main/good/goodList.vue'
 import PetList from '../views/main/pet/petList.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
 import ShopList from '../views/main/shop/ShopList.vue'
-import Content from '../views/main/Content.vue'
+import Content from '../views/main/content.vue'
 import { notification } from 'ant-design-vue'
 
 import adminList from '../views/main/admin/adminList.vue'

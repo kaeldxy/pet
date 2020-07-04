@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentAdmin: {name: '', position: '', account: ''}
+    currentAdmin: {name: '', position: '', account: '', _id: ''}
   },
   mutations: {
     toggleCurrentAdmin: (state, payload) => Object.assign(state.currentAdmin, payload)

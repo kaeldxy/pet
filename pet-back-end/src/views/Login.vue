@@ -41,9 +41,12 @@ export default {
       const data = await adminService.login(this.form)
       this.$message.info(data.msg, 0.7)
       if(data.statu){
-        window.localStorage['_k'] = data.token
-        const { position, account} = this.form
-        const admininfo = Object.assign({ position, account}, {name: data.name})
+        const {token, _id, position, name} = data
+        window.localStorage['_k'] = token
+        const { account} = this.form
+        const admininfo = {
+          _id, position, name, account
+        }
         window.localStorage['admininfo'] = JSON.stringify(admininfo)
         this.$router.push({name: 'Info'})
       }

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import { notification } from 'ant-design-vue'
 Axios.interceptors.request.use(function (config) {
-    config.headrs = { 'Authorization': `Bearer ${window.localStorage['_k']}` }
+    config.headers = { 'Authorization': `Bearer ${window.localStorage['_k']}` }
     return config;
 });
 Axios.interceptors.response.use(function (response) {

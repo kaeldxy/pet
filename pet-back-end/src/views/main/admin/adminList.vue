@@ -134,9 +134,7 @@ export default {
       });
     },
     handleUpdate(record) {
-      Object.assign(this.currentUpdate, record)
-      this.visible = true;
-      console.log(record);
+      this.$router.replace({name: 'adminUpdate', params: record})
     }
   },
   created() {

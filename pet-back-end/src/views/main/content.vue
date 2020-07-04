@@ -82,5 +82,6 @@ export default {
   padding-right: 40px;
   margin-top: 20px;
   padding-left: 20px;
+  padding-bottom: 100px;
 }
 </style>

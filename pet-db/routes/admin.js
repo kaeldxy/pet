@@ -35,4 +35,10 @@ router.post('/del', async function(req, res, next){
   const data = await adminService.del(_id)
   res.send(data)
 })
+
+router.post('/update', async function(req, res, next){
+  const updateData = req.body
+  const data = await adminService.update(updateData)
+  res.send(data)
+})
 module.exports = router;

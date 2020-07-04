@@ -1,10 +1,13 @@
 <template>
-  <div>adminUpdate</div>
+  <adminUpdateForm />
 </template>
 
 <script>
+import adminUpdateForm from '../../../components/admin/adminUpdateForm'
 export default {
-
+  components:{
+    adminUpdateForm
+  },
 }
 </script>
 

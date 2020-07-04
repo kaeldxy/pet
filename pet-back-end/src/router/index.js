@@ -24,6 +24,8 @@ import MyseverAdd from '../views/main/mysever/myseverAdd.vue'
 import MyseverUpdate from '../views/main/mysever/myseverUpdate.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
 
+import userList from '../views/main/user/userList.vue'
+
 import Content from '../views/main/content.vue'
 
 import { notification } from 'ant-design-vue'
@@ -58,6 +60,14 @@ const routes = [
       }
     },
     children: [
+      {
+        path: 'user',
+        name: 'user',
+        component: Content,
+        children: [
+          {path: 'list', name: 'userList', component: userList}
+        ]
+      },
       {
         path: 'admin',
         name: 'admin',

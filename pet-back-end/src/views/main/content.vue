@@ -3,16 +3,22 @@
     <div class="nav-top">
       <a-menu v-model="current" class="insidenav" mode="horizontal">
         <a-menu-item key="list">
-          <span class="navItem">
+          <router-link class="navItem" :to="oneRoute">
             <a-icon type="mail" />
-            <router-link :to="oneRoute">{{'NavgateTo ' + firstName + ' 数据展示'}}</router-link>
-          </span>
+            {{'NavgateTo ' + firstName + ' 数据展示'}}
+          </router-link>
         </a-menu-item>
         <a-menu-item key="add">
-          <span class="navItem">
+          <router-link class="navItem" :to="secondRoute">
             <a-icon type="appstore" />
-            <router-link :to="secondRoute">{{'NavgateTo ' + firstName + ' 新增功能'}}</router-link>
-          </span>
+            {{'NavgateTo ' + firstName + ' 新增功能'}}
+          </router-link>
+        </a-menu-item>
+        <a-menu-item v-if="isShowUpdate" key="update">
+          <router-link class="navItem" :to="secondRoute">
+            <a-icon type="appstore" />
+            {{'NavgateTo ' + firstName + ' 更新功能'}}
+          </router-link>
         </a-menu-item>
       </a-menu>
     </div>
@@ -24,11 +30,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      current: ["mail"]
-    };
-  },
   computed: {
     firstName() {
       return this.$route.matched[1].name;
@@ -38,9 +39,15 @@ export default {
     },
     secondRoute() {
       return `/info/${this.firstName}/add`;
+    },
+    current(){
+      const key = this.$route.path.split('/')[3]
+      return [key]
+    },
+    isShowUpdate(){
+      return this.$route.path.split('/')[3] === 'update'
     }
   },
-  mounted() {}
 };
 </script>
 

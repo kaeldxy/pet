@@ -99,7 +99,6 @@ export default {
       "toggleCurrentAdmin",
       JSON.parse(window.localStorage["admininfo"])
     );
-    console.log("当前登录用户： ", this.$store.state.currentAdmin);
   }
 };
 </script>

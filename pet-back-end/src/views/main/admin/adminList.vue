@@ -110,7 +110,7 @@ export default {
       shopAdminData: {
         total: 0,
         data: []
-      }
+      },
     };
   },
   methods: {
@@ -134,6 +134,8 @@ export default {
       });
     },
     handleUpdate(record) {
+      Object.assign(this.currentUpdate, record)
+      this.visible = true;
       console.log(record);
     }
   },

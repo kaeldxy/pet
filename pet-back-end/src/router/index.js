@@ -23,8 +23,8 @@ import PetList from '../views/main/pet/petList.vue'
 import MyseverAdd from '../views/main/mysever/myseverAdd.vue'
 import MyseverUpdate from '../views/main/mysever/myseverUpdate.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
-
 import Content from '../views/main/content.vue'
+
 
 import { notification } from 'ant-design-vue'
  

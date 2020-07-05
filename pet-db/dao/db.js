@@ -7,10 +7,14 @@ db.once('open', function () {
     console.log("we're connected!");
 });
 
-// require("./module/adminUserModule.js");
-// require("./module/frontUserModule.js");
-// require("./module/movieModule.js");
-// require("./module/cinemaModule.js");
-// require("./module/theaterModule.js");
-// require("./module/scheduleModule.js");
-// require("./module/orderModule.js");
+require("./models/adminModel.js");
+require("./models/goodModel.js");
+require("./models/goodmidModel.js");
+require("./models/myseverModel.js");
+require("./models/mysevermidModel.js");
+require("./models/petModel.js");
+require("./models/petmidModel.js");
+require("./models/shopModel.js");
+require("./models/userModel.js");
+
+

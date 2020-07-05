@@ -3,7 +3,7 @@ const shopService = require("../service/shop");
 
 var router = express.Router();
 
-/* GET home page. */
+
 router.post("/addShop", async function (req, res, next) {
   const { name, telephone, desc, adminId } = req.body;
   const address = req.body.address.join(" ");
@@ -17,11 +17,7 @@ router.post("/addShop", async function (req, res, next) {
   res.send(data);
 });
 router.get("/findShop", async function (req, res, next) {
-  let { limit, page } = req.query;
-  limit = ~~limit;
-  page = ~~page;
-  const data = await shopService.findShop({ limit, page });
-  res.send(data);
+  res.send(await shopService.findShop(req.query));
 });
 router.post("/updataShop", async function (req, res, next) {  
   const { _id, name, telephone, desc, adminId } = req.body;

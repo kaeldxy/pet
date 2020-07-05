@@ -16,10 +16,9 @@ service.createShop = async ({ name, address, telephone, desc, adminId }) => {
   }
   return { status, msg, data };
 };
-service.findShop = async ({ limit, page }) => {
-  const data = await shopDao.findShop({ limit, page });
-  return data;
-};
+
+service.findShop = async condition => await shopDao.findShop(condition);
+
 service.updataShop = async ({
   _id,
   name,
@@ -36,12 +35,8 @@ service.updataShop = async ({
     desc,
     adminId,
   });
-  let status = true,
-    msg = "updata success";
-  if (!data) {
-    (status = false), (msg = "updata failed"), (data = 0);
-  }
-  return { status, msg, data };
+  
+  return data
 };
 
 module.exports = service;

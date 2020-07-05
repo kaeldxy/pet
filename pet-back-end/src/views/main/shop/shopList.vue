@@ -1,9 +1,6 @@
 <template>
   <div>
-    <a-list
-      :grid="{ gutter: 6, xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 3 }"
-      :data-source="data.rows"
-    >
+    <a-list :grid="{ gutter: 6, xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 3 }" :data-source="rows">
       <a-list-item slot="renderItem" slot-scope="item">
         <a-card :title="item.name" class="text">
           <p>地址：</p>
@@ -12,55 +9,35 @@
           <p class="indentation">{{item.telephone}}</p>
           <p>门店信息：</p>
           <p class="indentation">{{item.desc}}</p>
-          <a-button type="primary" @click="updata(item)" style=" position: absolute;bottom: 10px;">修改</a-button>
+          <a-button
+            type="primary"
+            @click="updata(item)"
+            style=" position: absolute;bottom: 10px;"
+          >修改</a-button>
         </a-card>
       </a-list-item>
     </a-list>
-    <a-pagination
-      v-model="page"
-      :total="data.count"
-      show-less-items
-      :defaultPageSize="3"
-      @change="toogle"
-    />
+    <a-pagination :total="count" :defaultCurrent="1" :defaultPageSize="6" show-less-items @change="toogle" />
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers(
-  "shop"
-);
+const { mapActions, mapState } = createNamespacedHelpers("shop");
 export default {
-  data() {
-    return {
-      page: 1
-    };
-  },
   methods: {
     ...mapActions(["getShops"]),
-    ...mapMutations(["change"]),
-    itemRender(current, type, originalElement) {
-      if (type === "prev") {
-        return <a>上一页</a>;
-      } else if (type === "next") {
-        return <a>下一页</a>;
-      }
-      return originalElement;
+    toogle(page, limit) {
+      this.getShops({ page, limit });
     },
-    toogle(pageNumber) {
-      this.change(pageNumber);
-      this.getShops();
-    },
-    updata(record){
-       this.$router.replace({name: 'ShopUpdate', params: record})      
+    updata(record) {
+      this.$router.replace({ name: "ShopUpdate", params: record });
     }
   },
   mounted() {
-    this.getShops();
-    this.$data.page = this.data.page;
+    this.getShops({});
   },
-  computed: mapGetters(["data"])
+  computed: mapState(["rows", "count"])
 };
 </script>
 

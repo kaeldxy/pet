@@ -1,11 +1,9 @@
 import shopServer from "../service/shop.js";
+
 export default {
   namespaced: true,
   state: {
-    limit: 3,
-    page: 1,
     count: 0,
-    maxPage: 0,
     rows: [],
   },
   mutations: {
@@ -14,26 +12,25 @@ export default {
         count: payload.count,
         maxPage: payload.maxPage,
         rows: [...payload.rows],
-      });      
+      });
     },
-    change(state,num){
-        state.page=num
-    }
-  },
-  getters: {
-    data: state => state,
   },
   actions: {
-    getShops: async ({ state, commit }) => {                
-      const { limit, page } = state;
-      const data = await shopServer.getShops({ page,limit  });      
+    getShops: async ({ commit, rootState }, {page = 1, limit = 6}) => {
+      const { _id: adminId, position } = rootState.currentAdmin
+      let data;
+      if (position === 'plat') {
+        data = await shopServer.getShops({ page, limit })
+      } else {
+        data = await shopServer.getShops({ page, limit, adminId });
+      }
       commit("getShop", data);
     },
-    addShop: async (context,payload) => { 
-      await shopServer.addShops(payload);   
+    addShop: async (context, payload) => {
+      await shopServer.addShops(payload);
     },
-    updataShop:async (context,payload) => { 
-      await shopServer.updataShop(payload);   
+    updataShop: async (context, payload) => {
+      await shopServer.updataShop(payload);
     },
   },
 };

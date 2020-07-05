@@ -2,38 +2,38 @@
   <a-layout id="components-layout-demo-custom-trigger">
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo"></div>
-      <a-menu theme="dark" mode="inline">
-        <a-menu-item v-if="showPlat" key="0">
-          <router-link to="/" class="my-nav">
+      <a-menu v-model="currentKey" theme="dark" mode="inline">
+        <a-menu-item v-if="showPlat" key="user">
+          <router-link to="/info/user/list" class="my-nav">
             <a-icon type="user" />
             <span>用户管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showPlat" key="1">
+        <a-menu-item v-if="showPlat" key="admin">
           <router-link to="/info/admin/list" class="my-nav">
             <a-icon type="user" />
             <span>管理员管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="shop">
           <router-link to="/info/shop/list" class="my-nav">
             <a-icon type="pic-center" />
             <span>门店管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showShop" key="3">
+        <a-menu-item v-if="showShop" key="good">
           <router-link to="/info/good/list" class="my-nav">
             <a-icon type="strikethrough" />
             <span>商品管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showShop" key="4">
+        <a-menu-item v-if="showShop" key="server">
           <router-link to="/info/mysever/list" class="my-nav">
             <a-icon type="cloud-server" />
             <span>服务管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showShop" key="5">
+        <a-menu-item v-if="showShop" key="pet">
           <router-link to="/info/pet/list" class="my-nav">
             <a-icon type="yuque" />
             <span>宠物管理</span>
@@ -77,21 +77,33 @@ export default {
       collapsed: false
     };
   },
-  methods:{
-    exitLogin(){
-      window.localStorage.removeItem('_k')
-      window.localStorage.removeItem('admininfo')
-      this.$store.commit('toggleCurrentAdmin', {name: '', position: '', account: ''})
-      this.$router.replace('/')
+  methods: {
+    exitLogin() {
+      window.localStorage.removeItem("_k");
+      window.localStorage.removeItem("admininfo");
+      this.$store.commit("toggleCurrentAdmin", {
+        name: "",
+        _id: "",
+        position: "",
+        account: ""
+      });
+      this.$router.replace("/");
     }
   },
   computed: {
     ...mapState(["currentAdmin"]),
     showShop() {
-      return this.currentAdmin.position === 'shop'
+      return this.currentAdmin.position === "shop";
     },
     showPlat() {
-      return this.currentAdmin.position === 'plat'
+      return this.currentAdmin.position === "plat";
+    },
+    currentKey(){
+      const key = this.$route.path.split('/')[2]
+      if(key){
+        return [key]
+      }
+      return ['']
     }
   },
   beforeCreate() {

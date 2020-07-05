@@ -1,7 +1,8 @@
 import Axios from 'axios'
 import { notification } from 'ant-design-vue'
+
 Axios.interceptors.request.use(function (config) {
-    config.headrs = { 'Authorization': `Bearer ${window.localStorage['_k']}` }
+    config.headers = { 'Authorization': `Bearer ${window.localStorage['_k']}` }
     return config;
 });
 Axios.interceptors.response.use(function (response) {
@@ -10,8 +11,10 @@ Axios.interceptors.response.use(function (response) {
     if (err.response.statusText === "Unauthorized") {
         notification.open({
             message: 'Unauthorized',
-            description: '您的令牌已经失效或者您还未登录',
+            description: '您的令牌已经失效，请重新登录',
         })
+        window.location.hash = '/'
+        window.localStorage.clear()
     }
     return { statusText: 'Unauthorized' }
 });

@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const userService = require('../service/user.js')
+
+router.get('/get', async function(req, res, next) {
+  let {page, limit} = req.query
+  page = ~~page
+  limit = ~~limit
+  res.send(await userService.get({page, limit}))
 });
 
 module.exports = router;

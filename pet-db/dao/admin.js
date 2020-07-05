@@ -14,7 +14,7 @@ module.exports = {
         const result = await adminModel.findOne(data)
         if (result) {
             if (result.status === 'pass') {
-                return { statu: true, msg: '登录成功', name: result.name, position: result.position }
+                return { statu: true, msg: '登录成功', name: result.name, position: result.position, _id: result._id }
             }
             return { statu: false, msg: '登录失败， 当前状态未激活' }
         } else {
@@ -31,5 +31,11 @@ module.exports = {
     del: async _id => {
         await adminModel.deleteOne({_id})
         return {statu: true, msg: '删除成功'}
+    },
+    update: async updateData => {
+        const doc = await adminModel.findOne({_id: updateData._id})
+        Object.assign(doc, updateData)
+        await doc.save()
+        return {statu: true, msg: '修改成功'}
     }
 }

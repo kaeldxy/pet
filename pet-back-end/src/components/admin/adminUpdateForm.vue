@@ -1,11 +1,13 @@
 <template>
-  <div class="adminFormBox">
-    <a-form-model class="adminForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+  <div class="adminUpdateFormBox">
+    <a-form-model
+      class="adminUpdateForm"
+      :model="form"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+    >
       <a-form-model-item label="账号">
         <a-input v-model="form.account" />
-      </a-form-model-item>
-      <a-form-model-item label="密码">
-        <a-input v-model="form.password" />
       </a-form-model-item>
       <a-form-model-item label="姓名">
         <a-input v-model="form.name" />
@@ -44,7 +46,6 @@ export default {
       wrapperCol: { span: 14 },
       rules: {
         account: { rule: /\w+/, text: "请填写正确的账号（数字字母构成）" },
-        password: { rule: /\w+/, text: "请填写正确的密码（数字字母构成）" },
         name: { rule: /.+/, text: "请填写正确的昵称（至少一位）" },
         age: { rule: /\d+/, text: "请填写正确的年龄（数字）" },
         gender: { rule: /^(male|female)$/, text: "请填写正确的性别" },
@@ -53,33 +54,31 @@ export default {
           text: "请填写正确的手机号码"
         },
         position: { rule: /^(plat|shop)$/, text: "请填写正确的（状态）" }
+      },
+      form: {
+        account: "", // 账号
+        name: "", // 姓名
+        age: "", // 年龄
+        gender: "", // 性别
+        phone: "", // 手机号
+        position: "" // 职位（平台管理员/门店管理员） plat / shop
       }
     };
   },
   props: {
     successTo: {
-        type: Object,
-        default(){
-            return {name: 'adminList'}
-        }
-    },
-    form: {
       type: Object,
       default() {
-        return {
-          account: "", // 账号
-          password: "", // 密码
-          name: "", // 姓名
-          age: "", // 年龄
-          gender: "male", // 性别
-          phone: "", // 手机号
-          position: "plat" // 职位（平台管理员/门店管理员） plat / shop
-        };
+        return { name: "adminList" };
       }
     }
   },
   methods: {
     async onSubmit() {
+      const _id = this.form._id;
+      delete this.form._id;
+      delete this.form.password;
+      delete this.form.status;
       const state = Object.entries(this.form).some(([key, val]) => {
         if (!this.rules[key].rule.test(val)) {
           this.$message.info(this.rules[key].text, 0.4);
@@ -87,10 +86,12 @@ export default {
         }
       });
       if (!state) {
-        const { statu, msg } = await adminService.reg(this.form);
+        const { statu, msg } = await adminService.update(
+          Object.assign(this.form, { _id })
+        );
         this.$notification.open({
-          message: "注册信息",
-          description: msg + (statu ? ",请登录" : "")
+          message: "Back Srver",
+          description: msg
         });
         if (statu) {
           this.$router.replace(this.successTo);
@@ -98,20 +99,21 @@ export default {
       }
     }
   },
-  computed:{
+  created() {
+    this.form = {...this.$route.params};
   }
 };
 </script>
 
 <style scoped>
-.adminFormBox {
+.adminUpdateFormBox {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.adminForm {
+.adminUpdateForm {
   width: 45%;
 }
 </style>

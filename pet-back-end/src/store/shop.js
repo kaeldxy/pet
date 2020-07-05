@@ -14,7 +14,7 @@ export default {
         count: payload.count,
         maxPage: payload.maxPage,
         rows: [...payload.rows],
-      });
+      });      
     },
     change(state,num){
         state.page=num

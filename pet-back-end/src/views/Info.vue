@@ -2,7 +2,7 @@
   <a-layout id="components-layout-demo-custom-trigger">
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo"></div>
-      <a-menu theme="dark" mode="inline">
+      <a-menu v-model="currentKey" theme="dark" mode="inline">
         <a-menu-item v-if="showPlat" key="user">
           <router-link to="/info/user/list" class="my-nav">
             <a-icon type="user" />
@@ -77,21 +77,33 @@ export default {
       collapsed: false
     };
   },
-  methods:{
-    exitLogin(){
-      window.localStorage.removeItem('_k')
-      window.localStorage.removeItem('admininfo')
-      this.$store.commit('toggleCurrentAdmin', {name: '', _id: '',  position: '', account: ''})
-      this.$router.replace('/')
+  methods: {
+    exitLogin() {
+      window.localStorage.removeItem("_k");
+      window.localStorage.removeItem("admininfo");
+      this.$store.commit("toggleCurrentAdmin", {
+        name: "",
+        _id: "",
+        position: "",
+        account: ""
+      });
+      this.$router.replace("/");
     }
   },
   computed: {
     ...mapState(["currentAdmin"]),
     showShop() {
-      return this.currentAdmin.position === 'shop'
+      return this.currentAdmin.position === "shop";
     },
     showPlat() {
-      return this.currentAdmin.position === 'plat'
+      return this.currentAdmin.position === "plat";
+    },
+    currentKey(){
+      const key = this.$route.path.split('/')[2]
+      if(key){
+        return [key]
+      }
+      return ['']
     }
   },
   beforeCreate() {

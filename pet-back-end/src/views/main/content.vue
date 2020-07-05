@@ -1,23 +1,33 @@
 <template>
   <div class="mycontent">
     <div class="nav-top">
-      <a-menu v-model="current" class="insidenav" mode="horizontal">
+      <a-menu v-model="currentKey" class="insidenav" mode="horizontal">
         <a-menu-item key="list">
-          <router-link class="navItem" :to="oneRoute">
-            <a-icon type="mail" />
-            {{'NavgateTo ' + firstName + ' 数据展示'}}
+          <router-link class="navItem" :to="listPath">
+            <a-icon type="mail" />NavgateTo 
+            <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
+            <span class="keyWord2">  {{  keyWords['list']}}</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="add">
-          <router-link class="navItem" :to="secondRoute">
-            <a-icon type="appstore" />
-            {{'NavgateTo ' + firstName + ' 新增功能'}}
+        <a-menu-item key="add" v-if="isShowAdd">
+          <router-link class="navItem" :to="addPath">
+            <a-icon type="appstore" />NavgateTo 
+            <span class="keyWord2">  {{  keyWords['add']}}</span>
+            <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="isShowUpdate" key="update">
-          <router-link class="navItem" :to="secondRoute">
-            <a-icon type="appstore" />
-            {{'NavgateTo ' + firstName + ' 更新功能'}}
+        <a-menu-item key="update" v-if="isShowUpdate">
+          <router-link class="navItem" :to="updatePath">
+            <a-icon type="appstore" />NavgateTo 
+            <span class="keyWord2">  {{  keyWords['update']}}</span>
+            <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="detail" v-if="isShowDetail">
+          <router-link class="navItem" :to="detailPath">
+            <a-icon type="appstore" />NavgateTo 
+            <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
+            <span class="keyWord2">  {{  keyWords['detail']}}</span>
           </router-link>
         </a-menu-item>
       </a-menu>
@@ -30,28 +40,66 @@
 
 <script>
 export default {
+  data() {
+    return {
+      basePath: "/info/"
+    };
+  },
   computed: {
-    firstName() {
-      return this.$route.matched[1].name;
+    keyWords() {
+      return this.$store.state.keyWords;
     },
-    oneRoute() {
-      return `/info/${this.firstName}/list`;
+    currentPath() {
+      const Path = this.$route.path.split("/");
+      const currentPath = Path.filter(item => item && item !== "info");
+      return currentPath
     },
-    secondRoute() {
-      return `/info/${this.firstName}/add`;
+    currentKey() {
+      return [this.currentPath[1]];
     },
-    current(){
-      const key = this.$route.path.split('/')[3]
-      return [key]
+    listPath(){
+      return this.basePath + this.currentPath[0] + '/list'
+    },
+    addPath(){
+      return this.basePath + this.currentPath[0] + '/add'
+    },
+    updatePath(){
+      return this.basePath + this.currentPath[0] + '/update'
+    },
+    detailPath(){
+      return this.basePath + this.currentPath[0] + '/detail'
     },
     isShowUpdate(){
-      return this.$route.path.split('/')[3] === 'update'
+      if(this.currentPath[0] === 'user'){
+        return false
+      }else{
+        return this.currentPath[1] === 'update'
+      }
+    },
+    isShowAdd(){
+      return !/(order|user)/.test(this.currentPath[0])
+    },
+    
+    isShowDetail(){
+      if(/(order|user)/.test(this.currentPath[0])){
+        return this.currentPath[0] === 'detail'
+      }
+      return false
     }
   },
 };
 </script>
 
-<style>
+<style scoped>
+.keyWord2{
+  font-weight: bolder;
+  font-size: 15px;
+  color: red;
+  margin: 0 3px;
+}
+.keyWord1{
+  color: rgb(17, 81, 97);
+}
 .navItem {
   display: block;
   width: 100%;

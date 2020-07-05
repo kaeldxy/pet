@@ -133,7 +133,7 @@ export default {
         }
       });
     },
-    handleUpdate(record) {
+    handleUpdate(record) {      
       this.$router.replace({name: 'adminUpdate', params: record})
     }
   },

@@ -12,6 +12,7 @@
           <p class="indentation">{{item.telephone}}</p>
           <p>门店信息：</p>
           <p class="indentation">{{item.desc}}</p>
+          <a-button type="primary" @click="updata(item)" style=" position: absolute;bottom: 10px;">修改</a-button>
         </a-card>
       </a-list-item>
     </a-list>
@@ -27,17 +28,19 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers("shop");
+const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers(
+  "shop"
+);
 export default {
   data() {
     return {
-      page:1,
+      page: 1
     };
   },
   methods: {
     ...mapActions(["getShops"]),
     ...mapMutations(["change"]),
-    itemRender(current, type, originalElement) {    
+    itemRender(current, type, originalElement) {
       if (type === "prev") {
         return <a>上一页</a>;
       } else if (type === "next") {
@@ -45,14 +48,17 @@ export default {
       }
       return originalElement;
     },
-    toogle(pageNumber){
-      this.change(pageNumber)
-      this.getShops()
+    toogle(pageNumber) {
+      this.change(pageNumber);
+      this.getShops();
+    },
+    updata(record){
+       this.$router.replace({name: 'ShopUpdate', params: record})      
     }
   },
   mounted() {
     this.getShops();
-    this.$data.page=this.data.page    
+    this.$data.page = this.data.page;
   },
   computed: mapGetters(["data"])
 };
@@ -63,6 +69,7 @@ export default {
   text-align: left;
   width: 300px;
   height: 400px;
+  position: relative;
 }
 .indentation {
   text-indent: 2rem;

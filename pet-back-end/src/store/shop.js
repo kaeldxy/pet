@@ -29,5 +29,11 @@ export default {
       const data = await shopServer.getShops({ page,limit  });      
       commit("getShop", data);
     },
+    addShop: async (context,payload) => { 
+      await shopServer.addShops(payload);   
+    },
+    updataShop:async (context,payload) => { 
+      await shopServer.updataShop(payload);   
+    },
   },
 };

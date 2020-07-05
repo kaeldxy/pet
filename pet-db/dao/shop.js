@@ -14,7 +14,11 @@ dao.createShop = async ({ name,address,telephone,desc,adminId }) => {
     const data = await shopModel.create({ name,address,telephone,desc,adminId });
     return data;
 }
-
+,
+dao.updataShop = async ({_id, name,address,telephone,desc,adminId }) => {
+    const data = await shopModel.updateOne({ _id }, { name,address,telephone,desc,adminId });
+    return data;
+}
 
 
 

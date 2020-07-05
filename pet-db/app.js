@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+var shopRouter = require('./routes/shop');
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/user');
 var myseverRouter = require('./routes/mysever');
@@ -23,7 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
+
 app.use('/good', goodRouter);
+
+app.use('/shop', shopRouter);
+
 
 
 app.use(function(req, res, next) {

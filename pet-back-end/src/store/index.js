@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
+import Vue from "vue";
+import Vuex from "vuex";
+import shop from "./shop";
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -19,12 +19,12 @@ export default new Vuex.Store({
       good: '商品',
       user: '用户',
     }
+
   },
   mutations: {
     toggleCurrentAdmin: (state, payload) => Object.assign(state.currentAdmin, payload)
   },
   actions: {
   },
-  modules: {
-  }
+  modules: {shop}
 })

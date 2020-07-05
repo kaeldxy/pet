@@ -82,7 +82,7 @@ export default {
     
     isShowDetail(){
       if(/(order|user)/.test(this.currentPath[0])){
-        return this.currentPath[0] === 'detail'
+        return this.currentPath[1] === 'detail'
       }
       return false
     }

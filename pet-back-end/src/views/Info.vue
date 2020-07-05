@@ -27,7 +27,7 @@
             <span>商品管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showShop" key="server">
+        <a-menu-item v-if="showShop" key="mysever">
           <router-link to="/info/mysever/list" class="my-nav">
             <a-icon type="cloud-server" />
             <span>服务管理</span>
@@ -37,6 +37,12 @@
           <router-link to="/info/pet/list" class="my-nav">
             <a-icon type="yuque" />
             <span>宠物管理</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item v-if="showShop" key="order">
+          <router-link to="/info/order/list" class="my-nav">
+            <a-icon type="yuque" />
+            <span>订单管理</span>
           </router-link>
         </a-menu-item>
       </a-menu>

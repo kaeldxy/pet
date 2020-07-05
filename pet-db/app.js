@@ -7,6 +7,7 @@ var logger = require('morgan');
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/user');
 var myseverRouter = require('./routes/mysever');
+var goodRouter = require('./routes/good');
 
 require('./dao/db.js')
 const jwtAuth = require('./utils/authToken')
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
+app.use('/good', goodRouter);
 
 
 app.use(function(req, res, next) {

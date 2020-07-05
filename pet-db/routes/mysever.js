@@ -12,4 +12,12 @@ router.post('/del', async function(req, res, next) {
   res.send(await myseverService.del(req.body._id))
 });
 
+router.post('/update', async function(req, res, next) {
+  res.send(await myseverService.update(req.body))
+});
+
+router.post('/add', async function(req, res, next) {
+  res.send(await myseverService.add(req.body))
+});
+
 module.exports = router;

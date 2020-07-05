@@ -24,14 +24,18 @@ import MyseverAdd from '../views/main/mysever/myseverAdd.vue'
 import MyseverUpdate from '../views/main/mysever/myseverUpdate.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
 
+import orderDetail from '../views/main/order/orderDetail.vue'
+import orderUpdate from '../views/main/order/orderUpdate.vue'
+import orderList from '../views/main/order/orderList.vue'
 
 import userList from '../views/main/user/userList.vue'
+import userDetail from '../views/main/user/userDetail.vue'
 
 import Content from '../views/main/content.vue'
 
 
 import { notification } from 'ant-design-vue'
- 
+
 
 Vue.use(VueRouter)
 
@@ -67,7 +71,8 @@ const routes = [
         name: 'user',
         component: Content,
         children: [
-          {path: 'list', name: 'userList', component: userList}
+          { path: 'list', name: 'userList', component: userList },
+          { path: 'detail', name: 'userDetail', component: userDetail },
         ]
       },
       {
@@ -120,6 +125,16 @@ const routes = [
           { path: 'update', name: 'MyseverUpdate', component: MyseverUpdate },
         ]
       },
+      {
+        path: 'order',
+        name: 'order',
+        component: Content,
+        children: [
+          { path: 'list', name: 'orderList', component: orderList },
+          { path: 'detail', name: 'orderDetail', component: orderDetail },
+          { path: 'update', name: 'orderUpdate', component: orderUpdate },
+        ]
+      },
     ]
   }
 ]
@@ -127,5 +142,25 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   const { position } = JSON.parse(window.localStorage['admininfo'])
+//   if (position) {
+//     if (position === 'plat') {
+//       if (/(user|admin|shop)/.test(to.path)) {
+//         next()
+//       } else {
+//       }
+//     } else {
+//       if (/(user|admin)/.test(to.path)) {
+
+//       } else {
+//         next()
+//       }
+//     }
+//   } else {
+//     next('/')
+//   }
+// })
 
 export default router

@@ -63,7 +63,7 @@ export default {
     };
   },
   computed: {
-    _id() {
+    adminId() {
       return this.$store.state.currentAdmin._id;
     }
   },
@@ -72,7 +72,7 @@ export default {
       const { data, total } = await myseverService.get({
         page,
         limit,
-        _id: this._id
+        adminId: this.adminId
       });
       this.data = data;
       this.total = total;
@@ -96,7 +96,7 @@ export default {
       });
     },
     handleUpdate(record) {
-      console.log(record);
+      this.$router.push({name: 'MyseverUpdate', params: record})
     }
   },
   created() {

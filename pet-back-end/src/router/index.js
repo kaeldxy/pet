@@ -23,12 +23,9 @@ import PetList from '../views/main/pet/petList.vue'
 import MyseverAdd from '../views/main/mysever/myseverAdd.vue'
 import MyseverUpdate from '../views/main/mysever/myseverUpdate.vue'
 import MyseverList from '../views/main/mysever/myseverList.vue'
-<<<<<<< HEAD
-=======
 
 import userList from '../views/main/user/userList.vue'
 
->>>>>>> 08972a1a889189b565a4c36d44b4fe6f94f3cc25
 import Content from '../views/main/content.vue'
 
 

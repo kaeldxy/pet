@@ -20,16 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-<<<<<<< HEAD
-
-
-app.use('/shop',shopRouter);
-=======
->>>>>>> 08972a1a889189b565a4c36d44b4fe6f94f3cc25
 // app.use(jwtAuth);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
+app.use('/shop', shopRouter);
+
 
 
 app.use(function(req, res, next) {

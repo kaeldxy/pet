@@ -10,13 +10,12 @@ export default {
     getShop(state, payload) {
       Object.assign(state, {
         count: payload.count,
-        maxPage: payload.maxPage,
         rows: [...payload.rows],
       });
     },
   },
   actions: {
-    getShops: async ({ commit, rootState }, {page = 1, limit = 6}) => {
+    getShops: async ({ commit, rootState }, {page = 1, limit = 10}) => {
       const { _id: adminId, position } = rootState.currentAdmin
       let data;
       if (position === 'plat') {
@@ -32,5 +31,11 @@ export default {
     updataShop: async (context, payload) => {
       await shopServer.updataShop(payload);
     },
+
+    getAll:async(context, payload)=>{
+    const data=await shopServer.getAll(payload);    
+    console.log(data);
+      
+    }
   },
 };

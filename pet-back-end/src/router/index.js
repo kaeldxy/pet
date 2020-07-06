@@ -15,6 +15,8 @@ import GoodList from '../views/main/good/goodList.vue'
 import ShopAdd from '../views/main/shop/shopAdd.vue'
 import ShopUpdate from '../views/main/shop/shopUpdate.vue'
 import ShopList from '../views/main/shop/shopList.vue'
+import ShopDetail from '../views/main/shop/shopDetail.vue'
+
 
 import PetAdd from '../views/main/pet/petAdd.vue'
 import PetUpdate from '../views/main/pet/petUpdate.vue'
@@ -113,6 +115,7 @@ const routes = [
           { path: 'list', name: 'ShopList', component: ShopList },
           { path: 'add', name: 'ShopAdd', component: ShopAdd },
           { path: 'update', name: 'ShopUpdate', component: ShopUpdate },
+          { path: 'detail', name: 'ShopDetail', component: ShopDetail },
         ]
       },
       {

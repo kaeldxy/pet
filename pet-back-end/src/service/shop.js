@@ -10,4 +10,8 @@ export default {
   updataShop: (obj) => axios.post(`${baseUrl}/shop/updataShop`, obj)
     .then((response) => response.data)
     .catch((error) => console.log(error)),
+    
+  getAll: condition => axios.get(`${baseUrl}/shop/findShop/all`, { params: condition})
+    .then((response) => response.data)
+    .catch((error) => console.log(error)),
 };

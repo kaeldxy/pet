@@ -12,6 +12,17 @@ dao.findShop = async ({ page, limit, adminId }) => {
     const count = result.length
     return { rows, count };
 }
+dao.allShop = async ({ adminId }) => {
+    let result = await shopModel.find({}).lean()
+    console.log("adminId",adminId);
+    
+    rows = result.filter(item => item.adminId == adminId)
+    console.log(rows);
+    
+    // const rows = result.slice((page - 1) * limit, (limit * page))
+    const count = result.length
+    return { rows, count };
+}
 
 dao.createShop = async ({ name, address, telephone, desc, adminId }) => {
     const data = await shopModel.create({ name, address, telephone, desc, adminId });

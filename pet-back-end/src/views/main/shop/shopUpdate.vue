@@ -1,9 +1,9 @@
 <template>
-<div>
+  <div style="margin:0,auto;width:500px">
   <a-form-model :form="form" @submit="handleSubmit">
     <a-form-model-item v-bind="formItemLayout">
       <span slot="label">
-        name&nbsp;
+        门店名称&nbsp;
         <a-tooltip title="What do you want others to call you?">
           <a-icon type="question-circle-o" />
         </a-tooltip>
@@ -18,44 +18,34 @@
         ]"
       />
     </a-form-model-item>
-    <a-form-model-item v-bind="formItemLayout" label="address">
-      <a-cascader
+    <a-form-model-item v-bind="formItemLayout" label="门店地址">
+     <a-input
       v-model="data.address"
         v-decorator="[
           'address',
           {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [
-              { type: 'array', required: true, message: 'Please select your address!' },
-            ],
+            rules: [{ required: true, message: 'Please input your address!' }],
           },
         ]"
-        :options="address"
-      />
+        style="width: 100%"
+      >
+      </a-input>
     </a-form-model-item>
-    <a-form-model-item v-bind="formItemLayout" label="telephone Number">
+    <a-form-model-item v-bind="formItemLayout" label="联系电话">
       <a-input
       v-model="data.telephone"
         v-decorator="[
           'telephone',
           {
-            rules: [{ required: true, message: 'Please input your telephone number!' }],
+            rules: [{ required: true, message: 'Please input your telephone!' }],
           },
         ]"
         style="width: 100%"
       >
-        <a-select
-          slot="addonBefore"
-          v-decorator="['prefix', { initialValue: '86' }]"
-          style="width: 70px"
-        >
-          <a-select-option value="86">+86</a-select-option>
-          <a-select-option value="87">+87</a-select-option>
-        </a-select>
       </a-input>
     </a-form-model-item>
 
-    <a-form-model-item v-bind="formItemLayout" label="desc">
+    <a-form-model-item v-bind="formItemLayout" label="门店简介">
       <a-textarea
       v-model="data.desc"
         v-decorator="[
@@ -77,51 +67,15 @@
 </template>
 
 <script>
-const address = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
-];
 import { createNamespacedHelpers } from "vuex";
 const { mapActions } = createNamespacedHelpers("shop");
 export default {
   mounted() {
     this.data = this.$router.currentRoute.params;
-    this.data.address=this.data.address.split(" ");
   },
   data() {
     return {
       data: {},
-      address,
       formItemLayout: {
         labelCol: {
           xs: { span: 24 },

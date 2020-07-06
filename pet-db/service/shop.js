@@ -17,7 +17,8 @@ service.createShop = async ({ name, address, telephone, desc, adminId }) => {
   return { status, msg, data };
 };
 
-service.findShop = async condition => await shopDao.findShop(condition);
+service.findShop = async (condition) => await shopDao.findShop(condition);
+service.findAll = async (condition) => await shopDao.allShop(condition);
 
 service.updataShop = async ({
   _id,
@@ -35,8 +36,8 @@ service.updataShop = async ({
     desc,
     adminId,
   });
-  
-  return data
+
+  return data;
 };
 
 module.exports = service;

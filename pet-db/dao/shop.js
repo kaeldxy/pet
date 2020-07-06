@@ -5,9 +5,7 @@ dao.findShop = async ({ page, limit, adminId }) => {
     let result = await shopModel.find({}).lean()
     page = ~~page;
     limit = ~~limit;
-    if (adminId) {
-        result = result.filter(item => item.adminId == adminId)
-    }
+    if (adminId) {result = result.filter(item => item.adminId == adminId)}
     const rows = result.slice((page - 1) * limit, (limit * page))
     const count = result.length
     return { rows, count };

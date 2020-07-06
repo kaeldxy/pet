@@ -9,8 +9,7 @@ module.exports = {
         const result = await myseverModel.find({}).lean()
         const arr = result.filter(item => item.adminId == adminId)
         const total = arr.length
-        const data = arr.slice((page - 1) * limit, (limit * page))
-        
+        const data = arr.slice((page - 1) * limit, (limit * page)) 
         return { data, total }
     },
     del: async (_id) => {

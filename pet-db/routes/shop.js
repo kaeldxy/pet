@@ -1,9 +1,6 @@
 var express = require("express");
 const shopService = require("../service/shop");
-
 var router = express.Router();
-
-
 router.post("/addShop", async function (req, res, next) {
   const { name, telephone, desc, adminId } = req.body;
   const address = req.body.address.join(" ");

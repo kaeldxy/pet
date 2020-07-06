@@ -1,10 +1,14 @@
+
 <template>
   <div>default</div>
 </template>
 
 <script>
-export default {};
+export default {
+
+}
 </script>
 
 <style>
+
 </style>

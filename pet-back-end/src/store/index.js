@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import shop from "./shop";
+import Pet from "./pet";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -26,5 +27,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: {shop}
+  modules: { shop, Pet}
 })

@@ -13,7 +13,7 @@ var userRouter = require('./routes/user');
 var myseverRouter = require('./routes/mysever');
 var goodRouter = require('./routes/good');
 var testRouter = require('./routes/test');
-
+var petRouter = require('./routes/pet');
 require('./dao/db.js')
 const jwtAuth = require('./utils/authToken')
 var app = express();
@@ -38,23 +38,17 @@ app.use('/mysever', myseverRouter);
 
 
 app.use('/good', goodRouter);
-
 app.use('/shop', shopRouter);
 app.use('/test', testRouter);
-
+app.use('/pet', petRouter);
 
 
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
-
 app.use(function (err, req, res, next) {
-
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-
   res.status(err.status || 500);
   res.render('error');
 });

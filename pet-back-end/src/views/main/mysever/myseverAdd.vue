@@ -16,6 +16,16 @@
       <a-form-model-item label="服务描述">
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
+      <a-form-model-item label="所属门店">
+        <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
+          <a-checkbox
+            v-for="item of allShops"
+            :key="item._id"
+            :value="item._id"
+            name="shop"
+          >{{item.name}}</a-checkbox>
+        </a-checkbox-group>
+      </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">Create</a-button>
         <a-button style="margin-left: 10px;">Cancel</a-button>
@@ -25,6 +35,7 @@
 </template>
 <script>
 import myseverService from "../../../service/mysever";
+import shopService from '../../../service/shop'
 export default {
   data() {
     return {
@@ -35,15 +46,16 @@ export default {
         classify: "", // 服务种类（洗澡/游泳/修毛/驱虫...）
         pet: "", // 适用宠物（全部/猫/狗/其他）
         price: "", // 服务价格
-        desc: "" // 服务描述
-      }
+        desc: "", // 服务描述
+        shopIdArr: []
+      },
+      allShops:[]
     };
   },
   methods: {
     async onSubmit() {
-      const adminId = this.$store.state.currentAdmin._id;
       const { statu, msg } = await myseverService.add(
-        Object.assign(this.form, { adminId })
+        Object.assign(this.form, { adminId: this.adminId })
       );
       this.$notification.open({
         message: "backServer",
@@ -53,6 +65,15 @@ export default {
         this.$router.replace("/info/mysever/list");
       }
     }
+  },
+  computed:{
+    adminId(){
+      return this.$store.state.currentAdmin._id
+    }
+  },
+  async created(){
+    const {rows} = await shopService.getShops({adminId: this.adminId, page: 1, limit: 100})
+    this.allShops = rows
   }
 };
 </script>
@@ -67,5 +88,14 @@ export default {
 }
 .myseverForm {
   width: 45%;
+}
+.shopArr{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.shopArr>*{
+  margin: 0 !important;
 }
 </style>

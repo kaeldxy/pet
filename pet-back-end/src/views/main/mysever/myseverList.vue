@@ -1,10 +1,13 @@
 <template>
   <div>
-    <a-table :columns="columns" :data-source="data" :rowKey="item => item._id" :pagination="false">
+    <a-table  :columns="columns" :data-source="data" :rowKey="item => item._id" :pagination="false">
       <div slot="Action" class="actions" slot-scope="record">
         <a @click="() => {handleDelete(record)}">删除</a>
         <a @click="() => {handleUpdate(record)}">修改</a>
       </div>
+      <template slot="shopTab" class="actions" slot-scope="shop">
+        {{shop.length === 0 ? '无' : shop.map(item => item.name).join('、')}}
+      </template>
     </a-table>
     <a-pagination
       show-size-changer
@@ -48,7 +51,15 @@ const columns = [
     ellipsis: true
   },
   {
+    title: "所属门店",
+    dataIndex: "shop",
+    ellipsis: true,
+    align: 'center',
+    scopedSlots: { customRender: "shopTab" }
+  },
+  {
     title: "Action",
+    align: 'center',
     scopedSlots: { customRender: "Action" }
   }
 ];

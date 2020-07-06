@@ -8,6 +8,9 @@
       <div slot="img" slot-scope="text">
         <img :src="/http/.test(text[1]) ? text[1] : '/api/' + text[1]" style="width: 40px; height: 20px;" alt="">
       </div>
+      <template slot="shop" slot-scope="shopArr">
+        {{shopArr.length === 0 ? '无' : shopArr.map(item => item.name).join('、')}}
+      </template>
     </a-table>
     <a-pagination
       show-size-changer
@@ -69,6 +72,12 @@ const columns = [
     title: "商品描述",
     dataIndex: "desc",
     ellipsis: true
+  },
+  {
+    title: "所属门店",
+    dataIndex: "shop",
+    ellipsis: true,
+    scopedSlots: { customRender: "shop" }
   },
   {
     title: "商品缩略图",

@@ -95,6 +95,7 @@ export default {
     document.getElementById('files').addEventListener('input', function () {
       document.getElementById('preViewBox').innerHTML = [...this.files].map(item => `<img style="display: inline-block;width: 150px;  margin-right: 10px; height: 150;" src="${getFileURL(item)}" />`).join('')
     })
+
   }
 };
 </script>

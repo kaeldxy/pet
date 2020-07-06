@@ -1,40 +1,32 @@
-import Servics from "../service/pet"
+import petServics from "../service/pet"
 export default {
     namespaced: true,
     state: {
-        limit: 5,
-        page: 1,
         rows: [],
-        count: 10
+        count: 0
     },
     mutations: {
-        getpets: (state, payload) => {
-            state.rows = payload.rows
-            state.count = payload.count
-        },
+        assign: (state, payload) => Object.assign(state, payload),
+        delOneItem: (state, _id) => Object.assign(state, { rows: state.rows.filter(item => item._id !== _id) })
     },
     actions: {
-        petall: async (context, datsa) => {
-            const limit = datsa.limit
-            const page = datsa.page
-            const data = await Servics.getpetsanys(limit, page)
-            context.commit("getpets", data)
+        getPets: async (context, { page, limit }) => {
+            const adminId = context.rootState.currentAdmin._id
+            const data = await petServics.get({ limit, page, adminId })
+            context.commit("assign", data)
         },
-        petadd: async (context, dates) => {
-            const data = await Servics.addpetsanys(dates)
-            return data
-        },
-        petupdata: async (context, datee) => {
-            const data = await Servics.petupdatasanys(datee)
-            return data
-        },
-        petUpload: async (context, formData) => {
-            const data = await Servics.updatapetsanys(formData)
-            return data
-        },
-        petdelet: async (context, uers) => {
-            const data = await Servics.delettpetsanys(uers)
-            return data
+        addPet: async (context, addData) => await petServics.add(addData),
+
+        updatePet: async (context, updateData) => await petServics.update(updateData),
+
+        uploadPetImg: async (context, formData) => await petServics.upload(formData),
+
+        delPet: async (context, _id) => {
+            const { statu, msg } = await petServics.del(_id)
+            if (statu) {
+                context.commit('delOneItem', _id)
+            }
+            return msg
         }
     },
 

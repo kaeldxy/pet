@@ -137,13 +137,20 @@ export default {
 .goodForm {
   width: 45%;
 }
-.shopArr{
+.shopArr {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
+  
 }
-.shopArr>*{
-  margin: 0 !important;
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>

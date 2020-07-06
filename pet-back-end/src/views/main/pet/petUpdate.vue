@@ -19,28 +19,24 @@
       <a-form-model-item label="宠物描述">
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
-     <a-form-model-item label="选择该属门店">
-      <a-checkbox-group v-model="form.type">
-        <a-checkbox value="1" name="type">
-          门店一
-        </a-checkbox>
-        <a-checkbox value="2" name="type">
-          门店二
-        </a-checkbox>
-         <a-checkbox value="4" name="type">
-          门店四
-        </a-checkbox>
-        <a-checkbox value="3" name="type">
-          门店三
-        </a-checkbox>
-      </a-checkbox-group>
-    </a-form-model-item>
-      <div>
-        <a-form-model-item label="宠物图片">
-          <input ref="imgFile" multiple id="files" type="file" />
-        </a-form-model-item>
-        <div id="preViewBox" style="height: 200px; display: flex; "></div>
-      </div>
+      <a-form-model-item label="所属门店">
+        <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
+          <a-checkbox
+            v-for="item of allShops"
+            :value="item._id"
+            :key="item._id"
+            name="type"
+          >{{item.name}}</a-checkbox>
+        </a-checkbox-group>
+      </a-form-model-item>
+      <uploadFile
+        fileName="episode"
+        v-model="petImgFile"
+        id="petUpdateUpload"
+        :multe="true"
+        :baseUrl="baseUrl"
+        :images="this.form.images"
+      />
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">Create</a-button>
         <a-button style="margin-left: 10px;">Cancel</a-button>
@@ -49,11 +45,14 @@
   </div>
 </template>
 <script>
-import { getFileURL } from "../../../utils/getFileURL";
-import petService from "../../../service/pet";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("Pet");
+import shopService from "../../../service/shop";
+import uploadFile from "../../../components/upload/index";
+const { mapActions } = createNamespacedHelpers("pet");
 export default {
+  components: {
+    uploadFile
+  },
   data() {
     return {
       labelCol: { span: 4 },
@@ -65,50 +64,45 @@ export default {
         weight: "", // 重量
         age: "", // 年龄
         desc: "", // 宠物描述
-        images: []
-      }
+        images: [],
+        shopIdArr: []
+      },
+      allShops: [],
+      petImgFile: new FormData()
     };
   },
   methods: {
-    ...mapActions(["petupdata"]),
+    ...mapActions(["updatePet", "uploadPetImg"]),
     async onSubmit() {
-      const formData = new FormData();
-      const files = this.$refs.imgFile.files;
-      for (const key in files) {
-        if (key !== "length" && key !== "item") {
-          formData.append("episode", files[key]);
-        }
+      const { patharr } = await this.uploadPetImg(this.petImgFile);
+      const {statu, msg} = await this.updatePet(
+        Object.assign(this.form, { images: patharr })
+      );
+      this.$message.info(msg, 0.7)
+      if(statu){
+        this.$router.replace({name: 'PetList'})
       }
-      const { patharr } = await petService.updatapetsanys(formData);
-      const arr = [];
-      for (let i = 0; i < patharr.length; i++) {
-        arr.push("/api/" + patharr[i]);
-      }
-      this.form.images = arr;
-      // this.petupdata(this.form);
-      // alert("更新成功")
-      // this.$router.push("/info/pet/list");
     }
   },
-  mounted() {
-    const data = JSON.parse(localStorage.getItem("updata"));
-      (this.form._id = data._id),
-      (this.form.name = data.name),
-      (this.form.classify = data.classify),
-      (this.form.price = data.price),
-      (this.form.weight = data.weight),
-      (this.form.age = data.age),
-      (this.form.desc = data.desc);
-    document.getElementById("files").addEventListener("input", function() {
-      document.getElementById("preViewBox").innerHTML = [...this.files]
-        .map(
-          item =>
-            `<img style="display: inline-block;width: 150px;  margin-right: 10px; height: 150;" src="${getFileURL(
-              item
-            )}" />`
-        )
-        .join("");
+  computed: {
+    adminId() {
+      return this.$store.state.currentAdmin._id;
+    },
+    baseUrl() {
+      return /http/.test(this.form.images[0]) ? "" : "/api/";
+    }
+  },
+  async created() {
+    Object.assign(this.form, this.$route.params, {
+      shopIdArr: this.$route.params.shop.map(item => item._id)
     });
+    delete this.form.shop;
+    const { rows } = await shopService.getShops({
+      page: 1,
+      limit: 100,
+      adminId: this.adminId
+    });
+    this.allShops = rows;
   }
 };
 </script>
@@ -122,6 +116,22 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+.shopArr {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  
+}
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>
  

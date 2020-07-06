@@ -7,22 +7,19 @@ const fs = require("fs");
 
 
 router.post('/add', async function (req, res, next) {
-    let { dates } = req.body;
-    res.send(await petService.servicepet(dates))
+    res.send(await petService.add(req.body))
 });
-router.post('/get', async function (req, res, next) {
-    let { page, limit } = req.body;
-    page = ~~page;
-    limit = ~~limit;
-    res.send(await petService.servicegetpet({ page, limit }))
+
+router.get('/get', async function (req, res, next) {
+    res.send(await petService.get(req.query))
 });
-router.post('/updata', async function (req, res, next) {
-    let datee = req.body;;
-    res.send(await petService.servicupdatapet(datee))
+
+router.post('/update', async function (req, res, next) {
+    res.send(await petService.update(req.body))
 });
-router.post('/delet', async function (req, res, next) {
-    let { uers } = req.body;
-    res.send(await petService.servicdeletpet(uers))
+router.post('/del', async function (req, res, next) {
+    const { _id } = req.body;
+    res.send(await petService.del(_id))
 });
 
 

@@ -16,6 +16,16 @@
       <a-form-model-item label="服务描述">
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
+      <a-form-model-item label="服务图片">
+        <uploadFile
+          v-model="imgs"
+          fileName="myseverImgs"
+          :baseUrl="baseUrl"
+          :images="form.images"
+          id="myseverUploadFile"
+          :multe="true"
+        />
+      </a-form-model-item>
       <a-form-model-item label="所属门店">
         <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
           <a-checkbox
@@ -36,6 +46,7 @@
 <script>
 import myseverService from "../../../service/mysever";
 import shopService from "../../../service/shop";
+import uploadFile from "../../../components/upload/index";
 export default {
   data() {
     return {
@@ -47,19 +58,31 @@ export default {
         pet: "", // 适用宠物（全部/猫/狗/其他）
         price: "", // 服务价格
         desc: "", // 服务描述
-        shopIdArr: []
+        shopIdArr: [],
+        images: []
       },
-      allShops: []
+      allShops: [],
+      imgs: new FormData()
     };
+  },
+  components: {
+    uploadFile
   },
   computed: {
     adminId() {
       return this.$store.state.currentAdmin._id;
+    },
+    baseUrl() {
+      return /http/.test(this.form.images[0]) ? "" : "/api/";
     }
   },
   methods: {
     async onSubmit() {
-      const { statu, msg } = await myseverService.update(this.form);
+      const { patharr } = await myseverService.upload(this.imgs);
+      const { statu, msg } = await myseverService.update({
+        ...this.form,
+        images: patharr
+      });
       this.$notification.open({
         message: "backServer",
         description: msg
@@ -88,7 +111,7 @@ export default {
 <style scoped>
 .myseverFormBox {
   width: 100%;
-  height: 100%;
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,13 +119,19 @@ export default {
 .myseverForm {
   width: 45%;
 }
-.shopArr{
+.shopArr {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
 }
-.shopArr>*{
-  margin: 0 !important;
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>

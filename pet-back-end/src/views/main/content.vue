@@ -4,28 +4,28 @@
       <a-menu v-model="currentKey" class="insidenav" mode="horizontal">
         <a-menu-item key="list">
           <router-link class="navItem" :to="listPath">
-            <a-icon type="mail" />NavgateTo 
+            <a-icon type="mail" />
             <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
             <span class="keyWord2">  {{  keyWords['list']}}</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="add" v-if="isShowAdd">
           <router-link class="navItem" :to="addPath">
-            <a-icon type="appstore" />NavgateTo 
+            <a-icon type="appstore" />
             <span class="keyWord2">  {{  keyWords['add']}}</span>
             <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="update" v-if="isShowUpdate">
           <router-link class="navItem" :to="updatePath">
-            <a-icon type="appstore" />NavgateTo 
+            <a-icon type="appstore" />
             <span class="keyWord2">  {{  keyWords['update']}}</span>
             <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="detail" v-if="isShowDetail">
           <router-link class="navItem" :to="detailPath">
-            <a-icon type="appstore" />NavgateTo 
+            <a-icon type="appstore" />
             <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
             <span class="keyWord2">  {{  keyWords['detail']}}</span>
           </router-link>
@@ -93,8 +93,8 @@ export default {
 <style scoped>
 .keyWord2{
   font-weight: bolder;
-  font-size: 15px;
-  color: red;
+  font-size: 14px;
+  color: rgb(134, 31, 31);
   margin: 0 3px;
 }
 .keyWord1{

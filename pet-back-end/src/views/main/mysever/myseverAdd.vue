@@ -16,6 +16,9 @@
       <a-form-model-item label="服务描述">
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
+      <a-form-model-item label="服务图片">
+        <uploadFile v-model="imgs" fileName="myseverImgs" id="myseverUploadFile" :multe="true" />
+      </a-form-model-item>
       <a-form-model-item label="所属门店">
         <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
           <a-checkbox
@@ -35,8 +38,12 @@
 </template>
 <script>
 import myseverService from "../../../service/mysever";
-import shopService from '../../../service/shop'
+import shopService from "../../../service/shop";
+import uploadFile from "../../../components/upload/index.vue";
 export default {
+  components: {
+    uploadFile
+  },
   data() {
     return {
       labelCol: { span: 4 },
@@ -49,13 +56,18 @@ export default {
         desc: "", // 服务描述
         shopIdArr: []
       },
-      allShops:[]
+      allShops: [],
+      imgs: new FormData()
     };
   },
   methods: {
     async onSubmit() {
+      
+      const {patharr} = await myseverService.upload(this.imgs)
+       Object.assign(this.form, { adminId: this.adminId,images: patharr })
+       
       const { statu, msg } = await myseverService.add(
-        Object.assign(this.form, { adminId: this.adminId })
+        Object.assign(this.form, { adminId: this.adminId,images: patharr })
       );
       this.$notification.open({
         message: "backServer",
@@ -66,14 +78,18 @@ export default {
       }
     }
   },
-  computed:{
-    adminId(){
-      return this.$store.state.currentAdmin._id
+  computed: {
+    adminId() {
+      return this.$store.state.currentAdmin._id;
     }
   },
-  async created(){
-    const {rows} = await shopService.getShops({adminId: this.adminId, page: 1, limit: 100})
-    this.allShops = rows
+  async created() {
+    const { rows } = await shopService.getShops({
+      adminId: this.adminId,
+      page: 1,
+      limit: 100
+    });
+    this.allShops = rows;
   }
 };
 </script>
@@ -81,7 +97,6 @@ export default {
 <style scoped>
 .myseverFormBox {
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,13 +104,20 @@ export default {
 .myseverForm {
   width: 45%;
 }
-.shopArr{
+.shopArr {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
+  
 }
-.shopArr>*{
-  margin: 0 !important;
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>

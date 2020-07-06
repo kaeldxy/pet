@@ -11,7 +11,7 @@
         </a-menu-item>
         <a-menu-item v-if="showPlat" key="admin">
           <router-link to="/info/admin/list" class="my-nav">
-            <a-icon type="user" />
+            <a-icon type="idcard" />
             <span>管理员管理</span>
           </router-link>
         </a-menu-item>
@@ -41,7 +41,7 @@
         </a-menu-item>
         <a-menu-item v-if="showShop" key="order">
           <router-link to="/info/order/list" class="my-nav">
-            <a-icon type="yuque" />
+            <a-icon type="highlight" />
             <span>订单管理</span>
           </router-link>
         </a-menu-item>

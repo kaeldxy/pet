@@ -1,171 +1,85 @@
 <template>
-<div>
-  <a-form-model :form="form" @submit="handleSubmit">
-    <a-form-model-item v-bind="formItemLayout">
-      <span slot="label">
-        name&nbsp;
-        <a-tooltip title="What do you want others to call you?">
-          <a-icon type="question-circle-o" />
-        </a-tooltip>
-      </span>
-      <a-input
-      v-model="data.name"
-        v-decorator="[
-          'name',
-          {
-            rules: [{ required: true, message: 'Please input your shopName!', whitespace: true }],
-          },
-        ]"
-      />
-    </a-form-model-item>
-    <a-form-model-item v-bind="formItemLayout" label="address">
-      <a-cascader
-      v-model="data.address"
-        v-decorator="[
-          'address',
-          {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [
-              { type: 'array', required: true, message: 'Please select your address!' },
-            ],
-          },
-        ]"
-        :options="address"
-      />
-    </a-form-model-item>
-    <a-form-model-item v-bind="formItemLayout" label="telephone Number">
-      <a-input
-      v-model="data.telephone"
-        v-decorator="[
-          'telephone',
-          {
-            rules: [{ required: true, message: 'Please input your telephone number!' }],
-          },
-        ]"
-        style="width: 100%"
-      >
-        <a-select
-          slot="addonBefore"
-          v-decorator="['prefix', { initialValue: '86' }]"
-          style="width: 70px"
-        >
-          <a-select-option value="86">+86</a-select-option>
-          <a-select-option value="87">+87</a-select-option>
-        </a-select>
-      </a-input>
-    </a-form-model-item>
-
-    <a-form-model-item v-bind="formItemLayout" label="desc">
-      <a-textarea
-      v-model="data.desc"
-        v-decorator="[
-          'desc',
-          {
-            rules: [{ required: true, message: 'Please input your desc!' }],
-          },
-        ]"
-        placeholder="Controlled autosize"
-        :auto-size="{ minRows: 3, maxRows: 5 }"
-      />
-    </a-form-model-item>
-
-    <a-form-model-item v-bind="tailFormItemLayout">
-      <a-button type="primary" html-type="submit">更新</a-button>
-    </a-form-model-item>
-  </a-form-model>
+  <div class="shopUpdataBox">
+    <a-form-model class="shopUpdataForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-model-item label="门店名称">
+        <a-input v-model="form.name" />
+      </a-form-model-item>
+      <a-form-model-item label="门店地址">
+        <a-input v-model="form.address" />
+      </a-form-model-item>
+      <a-form-model-item label="联系电话">
+        <a-input v-model="form.telephone" />
+      </a-form-model-item>
+      <a-form-model-item label="门店简介">
+        <a-input v-model="form.desc" type="textarea" />
+      </a-form-model-item>
+      <a-form-model-item label="门店图片">
+        <uploadFile v-model="shopFile" :images="form.images"
+          :baseUrl="src" :multe="true" fileName="shopImgs" />
+      </a-form-model-item>
+      <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
+        <a-button type="primary" @click="onSubmit">添加</a-button>
+      </a-form-model-item>
+    </a-form-model>
   </div>
 </template>
 
 <script>
-const address = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
-];
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("shop");
+import uploadFile from "../../../components/upload/index";
+import shopService from "../../../service/shop";
 export default {
-  mounted() {
-    this.data = this.$router.currentRoute.params;
-    this.data.address=this.data.address.split(" ");
+  components: {
+    uploadFile
   },
   data() {
     return {
-      data: {},
-      address,
-      formItemLayout: {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 8 }
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 16 }
-        }
+      labelCol: { span: 4 },
+      wrapperCol: { span: 14 },
+      form: {
+        name: "", // 名称
+        address: "", // 地址
+        telephone: "", // 电话
+        desc: "", // 门店描述
+        images: [""]
       },
-      tailFormItemLayout: {
-        wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0
-          },
-          sm: {
-            span: 16,
-            offset: 8
-          }
-        }
-      }
+      shopFile: new FormData(),
+      src:''
     };
   },
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: "register" });
+  mounted() {
+    this.form = this.$router.currentRoute.params;
+    if(this.form.images)
+    this.src= /http/.test(this.form.images[0]) ? "" : "/api/";
+    },
+  
+  computed: {
+    adminId() {
+      return this.$store.state.currentAdmin._id;
+    }
   },
   methods: {
-    ...mapActions(["updataShop"]),
-    handleSubmit(e) {
-      e.preventDefault();
-      this.form.validateFieldsAndScroll((err, values) => {
-        if (!err) {          
-          const {adminId,_id }= this.$router.currentRoute.params;
-          Object.assign(values, { adminId,_id,...this.data });
-          this.updataShop(values);
-          this.$message.info('更新成功！');
-          this.$router.replace({name: 'ShopList'})
-        }
-      });
+    async onSubmit() {
+      const { patharr } = await shopService.upload(this.shopFile);
+      const addData = Object.assign(
+        {},
+        this.form,
+        { adminId: this.adminId },
+        { images: patharr }
+      );
+      const { statu, msg } = await shopService.updataShop(addData);
+      if (statu) {
+        this.$message.info(msg);
+        this.$router.replace({ name: "ShopList" });
+      } else {
+        this.$message.info("添加失败！");
+      }
     }
   }
 };
 </script>
 
 <style>
+.shopUpdataBox{
+  width: 800px;
+}
 </style>

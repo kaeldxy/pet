@@ -11,7 +11,7 @@
       <img
         v-for="item in shop.images"
         :key="item"
-        :src="`/api/${item}`"
+        :src="src+item"
         style="width:100px;height:100px; margin: 0 10px"
       />
     </div>
@@ -48,19 +48,12 @@ export default {
   components:{Good,MySever,Pets},
   mounted() {
     this.shop = this.$router.currentRoute.params;
-    
-    // this.shop.images.map(item=>{
-    //   if(/[a-zA-z]+:\/\/[^\s]*/){
-    //     console.log(item)
-    //   }else{
-    //     item="/api/"+item
-    //     console.log(item)
-    //   }
-    // })
+    if(this.shop.images)this.shop.images.forEach(item=>this.src= /http:\/\/*/.test(item)?"":`/api/`)
   },
   data() {
     return {
       shop: {},
+      src:'',
     };
   },
   methods: {

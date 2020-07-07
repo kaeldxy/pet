@@ -11,10 +11,9 @@
           <p style="display: flex;overflow: hidden;">
             <a-empty v-if="!item.images[0]" style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;" :image="simpleImage" />
             <img
-          v-for="(src, index) of item.images"
-          :key="index"
-          :src="/http/.test(src) ? src : '/api/' + src"
-          style="height:100px; margin: 0 10px"
+          v-if="item.images[0]"
+          :src="/http/.test(item.images[0]) ? item.images[0] : '/api/' + item.images[0]"
+          style="width:130px; height:100px; margin: 0 10px"
         />
           </p>
           <p>地址：</p>
@@ -72,10 +71,11 @@ export default {
   },
   created(){
     this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
-  },
-  mounted() {
     this.getShops({});
   },
+  // mounted() {
+  //   this.getShops({});
+  // },
   computed: mapState(["rows", "count"])
 };
 </script>

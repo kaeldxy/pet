@@ -10,9 +10,9 @@
       <p>门店图片:</p>
       <a-empty v-if="!shop.images[0]" style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;" :image="simpleImage" />
       <img
-        v-for="item in shop.images"
-        :key="item"
-        :src="/http/.test(src) ? src : '/api/' + item"
+        v-for="(item,index) in shop.images"
+        :key="index"
+        :src="/http/.test(item) ? item : '/api/' + item"
         style="width:100px;height:100px; margin: 0 10px"
       />
     </div>
@@ -55,7 +55,6 @@ export default {
   data() {
     return {
       shop: {},
-      src: "",
     };
   },
   methods: {

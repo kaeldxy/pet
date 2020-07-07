@@ -35,8 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
-
-
 app.use('/good', goodRouter);
 app.use('/shop', shopRouter);
 app.use('/test', testRouter);

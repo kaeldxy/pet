@@ -1,20 +1,8 @@
 const petDao = require("../dao/pet");
 const service = {};
 
-service.servicepet = async (dates) => {
-    const date = await petDao.addpet(dates);
-    return date
-}
-service.servicegetpet = async ({ page, limit }) => {
-    const date = await petDao.getpet({ page, limit });
-    return date
-}
-service.servicupdatapet = async (datee) => {
-    const date = await petDao.updatapet(datee);
-    return date
-}
-service.servicdeletpet = async (uers) => {
-    const date = await petDao.deletpet(uers);
-    return date
-}
+service.add = async (addData) => await petDao.add(addData);
+service.get = async (query) =>await petDao.get(query);
+service.update = async updateData => await petDao.update(updateData);
+service.del = async _id => await petDao.del(_id);
 module.exports = service

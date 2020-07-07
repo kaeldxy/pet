@@ -44,7 +44,16 @@
           fileName="goodImgs"
         />
       </a-form-model-item>
-
+      <a-form-model-item label="所属门店">
+        <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
+          <a-checkbox
+            v-for="item of allShops"
+            :key="item._id"
+            :value="item._id"
+            name="shop"
+          >{{item.name}}</a-checkbox>
+        </a-checkbox-group>
+      </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">Create</a-button>
         <a-button style="margin-left: 10px;">Cancel</a-button>
@@ -55,6 +64,7 @@
 <script>
 import goodService from "../../../service/good";
 import uploadFile from "../../../components/upload/index";
+import shopService from '../../../service/shop'
 import moment from "moment";
 export default {
   data() {
@@ -71,8 +81,10 @@ export default {
         shelfLife: "", // 保质期
         producer: "", // 产地
         images: [""], // 商品图片（列表图/详情图...）
-        desc: "" // 商品描述
+        desc: "", // 商品描述
+        shopIdArr: []
       },
+      allShops: [],
       myImgFile: new FormData()
     };
   },
@@ -82,6 +94,9 @@ export default {
   computed: {
     isHaveBaseUrl() {
       return /http/.test(this.form.images[0]) ? "" : "/api/";
+    },
+    adminId(){
+      return this.$store.state.currentAdmin._id
     }
   },
   methods: {
@@ -102,12 +117,12 @@ export default {
       }
     }
   },
-  created() {
-    this.$route.params.production = moment(
-      this.$route.params.production,
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    this.form = this.$route.params;
+  async created() {
+    this.$route.params.production = moment(this.$route.params.production,"YYYY-MM-DD HH:mm:ss");
+    this.form = {...this.$route.params, shopIdArr: this.$route.params.shop.map(item => item._id)};
+    delete this.form.shop
+    const {rows} = await shopService.getShops({page: 1, limit: 100, adminId: this.adminId})
+    this.allShops = rows
   }
 };
 </script>
@@ -121,5 +136,21 @@ export default {
 }
 .goodForm {
   width: 45%;
+}
+.shopArr {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  
+}
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>

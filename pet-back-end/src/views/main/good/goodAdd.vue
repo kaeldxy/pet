@@ -42,7 +42,16 @@
           fileName="goodImgs"
         />
       </a-form-model-item>
-
+      <a-form-model-item label="所属门店">
+        <a-checkbox-group class="shopArr" v-model="form.shopIdArr">
+          <a-checkbox
+            v-for="item of allShops"
+            :key="item._id"
+            :value="item._id"
+            name="shop"
+          >{{item.name}}</a-checkbox>
+        </a-checkbox-group>
+      </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">Create</a-button>
         <a-button style="margin-left: 10px;">Cancel</a-button>
@@ -53,7 +62,7 @@
 <script>
 import goodService from "../../../service/good";
 import uploadFile from "../../../components/upload/index";
-
+import shopService from '../../../service/shop'
 export default {
   data() {
     return {
@@ -69,8 +78,10 @@ export default {
         shelfLife: "", // 保质期
         producer: "", // 产地
         images: [""], // 商品图片（列表图/详情图...）
-        desc: "" // 商品描述
+        desc: "", // 商品描述
+        shopIdArr: []
       },
+      allShops: [],
       myImgFile: new FormData()
     };
   },
@@ -100,6 +111,10 @@ export default {
       }
     }
   },
+  async created(){
+    const {rows} = await shopService.getShops({adminId: this.adminId, page: 1, limit: 100})
+    this.allShops = rows
+  }
 }
 </script>
 
@@ -112,5 +127,21 @@ export default {
 }
 .goodForm {
   width: 45%;
+}
+.shopArr {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  
+}
+.shopArr > * {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid rgb(163, 33, 33);
+  background-color: rgb(112, 88, 88); */
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  margin: 0 4px !important;
 }
 </style>

@@ -5,9 +5,19 @@
         <a @click="() => {handleDelete(record)}">删除</a>
         <a @click="() => {handleUpdate(record)}">修改</a>
       </div>
-      <div slot="img" slot-scope="text">
-        <img :src="/http/.test(text[1]) ? text[1] : '/api/' + text[1]" style="width: 40px; height: 20px;" alt="">
+      <div slot="expandedRowRender" slot-scope="record">
+        商品图片
+        <img
+          v-for="(item, index) of record.images"
+          :key="index"
+          :src="/http/.test(item) ? item : '/api/' + item"
+          style="width: 100px; height: 70px; margin-right: 6px;"
+        />
       </div>
+      <template
+        slot="shop"
+        slot-scope="shopArr"
+      >{{shopArr.length === 0 ? '无' : shopArr.map(item => item.name).join('、')}}</template>
     </a-table>
     <a-pagination
       show-size-changer
@@ -71,10 +81,10 @@ const columns = [
     ellipsis: true
   },
   {
-    title: "商品缩略图",
-    dataIndex: 'images',
+    title: "所属门店",
+    dataIndex: "shop",
     ellipsis: true,
-    scopedSlots: { customRender: "img" }
+    scopedSlots: { customRender: "shop" }
   },
   {
     title: "Action",
@@ -89,13 +99,13 @@ export default {
     return {
       data: [],
       columns,
-      total: 0,
+      total: 0
     };
   },
   computed: {
     adminId() {
       return this.$store.state.currentAdmin._id;
-    },
+    }
   },
   methods: {
     async getGoodData(page = 1, limit = 10) {
@@ -117,17 +127,17 @@ export default {
       this.$confirm({
         title: "你真的要删除这一项吗",
         onOk: async () => {
-          const {statu,  msg } = await goodService.del(record._id);
+          const { statu, msg } = await goodService.del(record._id);
           this.$message.info(msg, 0.7);
-          if(statu){
-            this.data = this.data.filter(item => item._id !== record._id)
+          if (statu) {
+            this.data = this.data.filter(item => item._id !== record._id);
           }
         }
       });
     },
     handleUpdate(record) {
-      this.$router.push({name: 'GoodUpdate', params: record})
-    },
+      this.$router.push({ name: "GoodUpdate", params: record });
+    }
   },
   created() {
     this.getGoodData();

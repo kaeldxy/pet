@@ -22,7 +22,7 @@
         <span slot="tab">
           <a-icon type="goods" />商品管理
         </span>
-       <Good />
+        <Good />
       </a-tab-pane>
       <a-tab-pane key="2">
         <span slot="tab">
@@ -41,25 +41,28 @@
 </template>
 
 <script>
-import Pets from '../pet/petList'
-import MySever from '../mysever/myseverList'
-import Good from '../good/goodList'
+import Pets from "../pet/petList";
+import MySever from "../mysever/myseverList";
+import Good from "../good/goodList";
 export default {
-  components:{Good,MySever,Pets},
+  components: { Good, MySever, Pets },
   mounted() {
     this.shop = this.$router.currentRoute.params;
-    if(this.shop.images)this.shop.images.forEach(item=>this.src= /http:\/\/*/.test(item)?"":`/api/`)
+    if (this.shop.images)
+      this.shop.images.forEach(
+        item => (this.src = /http:\/\/*/.test(item) ? "" : `/api/`)
+      );
   },
   data() {
     return {
       shop: {},
-      src:'',
+      src: ""
     };
   },
   methods: {
     callback(key) {
       console.log(key);
-    },
+    }
   }
 };
 </script>

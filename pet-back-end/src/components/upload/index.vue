@@ -17,10 +17,10 @@
     </div>
     <div class="preVieBox">
       <template v-if="isShowPropImg">
-        <img :src="baseUrl + item" v-for="item of images" :key="item" />
+        <img :src="baseUrl + item" v-for="(item, index) of images" :key="index" />
       </template>
       <template v-else>
-        <img :src="getFileURL(item)" v-for="item of files" :key="item.lastModified" />
+        <img :src="getFileURL(item)" v-for="(item, index) of files" :key="index" />
       </template>
     </div>
   </div>

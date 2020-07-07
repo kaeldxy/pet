@@ -16,5 +16,6 @@ require("./models/petModel.js");
 require("./models/petmidModel.js");
 require("./models/shopModel.js");
 require("./models/userModel.js");
+require("./models/addrModel.js");
 
 

@@ -61,6 +61,7 @@
               账号：{{currentAdmin.account}}
             </span>
             <span>姓名：{{currentAdmin.name}}</span>
+            <img class="headPic" src="../assets/admin_head.jpg" alt />
             <span
               style="fontWeight: 800; color: #876800"
             >身份：{{currentAdmin.position === 'shop' ? '门店管理员' : '平台管理员'}}</span>
@@ -104,12 +105,12 @@ export default {
     showPlat() {
       return this.currentAdmin.position === "plat";
     },
-    currentKey(){
-      const key = this.$route.path.split('/')[2]
-      if(key){
-        return [key]
+    currentKey() {
+      const key = this.$route.path.split("/")[2];
+      if (key) {
+        return [key];
       }
-      return ['']
+      return [""];
     }
   },
   beforeCreate() {
@@ -122,7 +123,7 @@ export default {
 </script>
 <style>
 .adminInfo {
-  width: 400px;
+  width: 500px;
   height: 100%;
   display: flex;
   justify-content: space-around;
@@ -134,6 +135,10 @@ export default {
 }
 .visbItem {
   display: none !important;
+}
+.headPic {
+  width: 40px;
+  height: 40px;
 }
 .headrLayout {
   width: 100%;

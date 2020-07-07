@@ -1,42 +1,13 @@
 const shopDao = require("../dao/shop");
 const service = {};
 
-service.createShop = async ({ name, address, telephone, desc, adminId }) => {
-  const data = await shopDao.createShop({
-    name,
-    address,
-    telephone,
-    desc,
-    adminId,
-  });
-  let status = true,
-    msg = "insert success";
-  if (!data) {
-    (status = false), (msg = "insert failed"), (data = 0);
-  }
-  return { status, msg, data };
-};
+service.createShop = async addData => await shopDao.createShop(addData);
 
 service.findShop = async (condition) => await shopDao.findShop(condition);
-service.findAll = async (condition) => await shopDao.allShop(condition);
+service.del = async (condition) => await shopDao.del(condition);
 
-service.updataShop = async ({
-  _id,
-  name,
-  address,
-  telephone,
-  desc,
-  adminId,
-}) => {
-  const data = await shopDao.updataShop({
-    _id,
-    name,
-    address,
-    telephone,
-    desc,
-    adminId,
-  });
-
+service.updataShop = async (condition) => {
+  const data = await shopDao.updataShop(condition);
   return data;
 };
 

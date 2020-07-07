@@ -19,8 +19,14 @@
           type="link"
           @click="updata(item)"
           size="small"
-          style=" position: absolute;top: 5px;right:5px;z-index:9"
+          style=" position: absolute;top: 15px;right:5px;"
         >修改</a-button>
+        <a-button
+          type="link"
+          @click="del(item)"
+          size="small"
+          style=" position: absolute;bottom: -15px;right:0;"
+        >删除</a-button>
       </a-list-item>
     </a-list>
     <a-pagination
@@ -39,7 +45,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("shop");
 export default {
   methods: {
-    ...mapActions(["getShops","getAll"]),
+    ...mapActions(["getShops", "delShop"]),
     toogle(page, limit) {
       this.getShops({ page, limit });
     },
@@ -48,13 +54,16 @@ export default {
     },
     detail(record) {
       this.$router.replace({ name: "ShopDetail", params: record });
+    },
+    del(item) {
+      const _id = item._id;
+      this.delShop({ _id });
+      this.getShops({});
+      this.$message.info("删除成功！");
     }
   },
   mounted() {
-    this.getShops({});
-    // const adminId = this.$store.state.currentAdmin._id;
-    
-    // this.getAll({adminId})
+    this.getShops({});    
   },
   computed: mapState(["rows", "count"])
 };

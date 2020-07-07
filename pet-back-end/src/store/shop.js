@@ -25,17 +25,9 @@ export default {
       }
       commit("getShop", data);
     },
-    addShop: async (context, payload) => {
-      await shopServer.addShops(payload);
-    },
-    updataShop: async (context, payload) => {
-      await shopServer.updataShop(payload);
-    },
+    // addShop: async (context, payload) => await shopServer.addShops(payload),
+    updataShop: async (context, payload) => await shopServer.updataShop(payload),
 
-    getAll:async(context, payload)=>{
-    const data=await shopServer.getAll(payload);    
-    console.log(data);
-      
-    }
+    delShop:async(context, payload)=>await shopServer.delShop(payload),
   },
 };

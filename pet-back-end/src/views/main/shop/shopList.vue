@@ -5,15 +5,22 @@
         slot="renderItem"
         slot-scope="item"
         class="text"
-        style="width: 200px; height: 300px;"
+        style="width: 200px; height: 340px;margin-bottom:20px;"
       >
-        <a-card :title="item.name" @click="detail(item)">
+        <a-card :title="item.name" @click="detail(item)" style="height:360px;">
+          <p style="display: flex;overflow: hidden;">
+            <a-empty v-if="!item.images[0]" style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;" :image="simpleImage" />
+            <img
+          v-for="(src, index) of item.images"
+          :key="index"
+          :src="/http/.test(src) ? src : '/api/' + src"
+          style="height:100px; margin: 0 10px"
+        />
+          </p>
           <p>地址：</p>
           <p class="indentation">{{item.address}}</p>
           <p>电话：</p>
           <p class="indentation">{{item.telephone}}</p>
-          <p>门店信息：</p>
-          <p class="indentation">{{item.desc}}</p>
         </a-card>
         <a-button
           type="link"
@@ -41,6 +48,7 @@
 </template>
 
 <script>
+import { Empty } from 'ant-design-vue';
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("shop");
 export default {
@@ -62,8 +70,11 @@ export default {
       this.$message.info("删除成功！");
     }
   },
+  created(){
+    this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
+  },
   mounted() {
-    this.getShops({});    
+    this.getShops({});
   },
   computed: mapState(["rows", "count"])
 };

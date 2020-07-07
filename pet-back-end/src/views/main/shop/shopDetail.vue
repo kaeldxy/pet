@@ -8,10 +8,11 @@
     </a-descriptions>
     <div style="text-align:left">
       <p>门店图片:</p>
+      <a-empty v-if="!shop.images[0]" style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;" :image="simpleImage" />
       <img
         v-for="item in shop.images"
         :key="item"
-        :src="src+item"
+        :src="/http/.test(src) ? src : '/api/' + item"
         style="width:100px;height:100px; margin: 0 10px"
       />
     </div>
@@ -44,19 +45,17 @@
 import Pets from "../pet/petList";
 import MySever from "../mysever/myseverList";
 import Good from "../good/goodList";
+import { Empty } from 'ant-design-vue';
 export default {
   components: { Good, MySever, Pets },
-  mounted() {
+  created() {
     this.shop = this.$router.currentRoute.params;
-    if (this.shop.images)
-      this.shop.images.forEach(
-        item => (this.src = /http:\/\/*/.test(item) ? "" : `/api/`)
-      );
+    this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
   },
   data() {
     return {
       shop: {},
-      src: ""
+      src: "",
     };
   },
   methods: {

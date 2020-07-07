@@ -17,9 +17,7 @@ router.get("/delShop", async function (req, res, next) {
   res.send(await shopService.del(req.query));
 });
 router.post("/updataShop", async function (req, res, next) {     
-  console.log(req.body)
-  const data = await shopService.updataShop(req.body);
-  res.send(data);
+  res.send(await shopService.updataShop(req.body));
 });
 
 const shopUpload = multer({ dest: path.join(rootPath, "/public/images/shop") });

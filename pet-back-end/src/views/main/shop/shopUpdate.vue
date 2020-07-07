@@ -1,6 +1,6 @@
 <template>
-  <div class="shopAddBox">
-    <a-form-model class="shopAddForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+  <div class="shopUpdataBox">
+    <a-form-model class="shopUpdataForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-model-item label="门店名称">
         <a-input v-model="form.name" />
       </a-form-model-item>
@@ -14,11 +14,11 @@
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
       <a-form-model-item label="门店图片">
-        <uploadFile v-model="shopFile" :multe="true" fileName="shopImgs" />
+        <uploadFile v-model="shopFile" :images="form.images"
+          :baseUrl="src" :multe="true" fileName="shopImgs" />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">添加</a-button>
-        <a-button style="margin-left: 10px;">清空</a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
@@ -42,12 +42,16 @@ export default {
         desc: "", // 门店描述
         images: [""]
       },
-      shopFile: new FormData()
+      shopFile: new FormData(),
+      src:''
     };
   },
   mounted() {
     this.form = this.$router.currentRoute.params;
-  },
+    if(this.form.images)
+    this.src= /http/.test(this.form.images[0]) ? "" : "/api/";
+    },
+  
   computed: {
     adminId() {
       return this.$store.state.currentAdmin._id;
@@ -75,4 +79,7 @@ export default {
 </script>
 
 <style>
+.shopUpdataBox{
+  width: 800px;
+}
 </style>

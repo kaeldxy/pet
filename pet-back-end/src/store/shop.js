@@ -15,7 +15,7 @@ export default {
     },
   },
   actions: {
-    getShops: async ({ commit, rootState }, {page = 1, limit = 10}) => {
+    getShops: async ({ commit, rootState }, { page = 1, limit = 10 }) => {
       const { _id: adminId, position } = rootState.currentAdmin
       let data;
       if (position === 'plat') {
@@ -25,9 +25,6 @@ export default {
       }
       commit("getShop", data);
     },
-    // addShop: async (context, payload) => await shopServer.addShops(payload),
-    updataShop: async (context, payload) => await shopServer.updataShop(payload),
-
-    delShop:async(context, payload)=>await shopServer.delShop(payload),
+    delShop: async (context, payload) => await shopServer.delShop(payload),
   },
 };

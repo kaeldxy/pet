@@ -22,13 +22,13 @@
         <span slot="tab">
           <a-icon type="goods" />商品管理
         </span>
-        Tab 1
+       <Good />
       </a-tab-pane>
       <a-tab-pane key="2">
         <span slot="tab">
           <a-icon type="service" />服务管理
         </span>
-        Tab 2
+        <MySever />
       </a-tab-pane>
       <a-tab-pane key="3">
         <span slot="tab">
@@ -42,10 +42,21 @@
 
 <script>
 import Pets from '../pet/petList'
+import MySever from '../mysever/myseverList'
+import Good from '../good/goodList'
 export default {
-  components:{Pets},
+  components:{Good,MySever,Pets},
   mounted() {
     this.shop = this.$router.currentRoute.params;
+    
+    // this.shop.images.map(item=>{
+    //   if(/[a-zA-z]+:\/\/[^\s]*/){
+    //     console.log(item)
+    //   }else{
+    //     item="/api/"+item
+    //     console.log(item)
+    //   }
+    // })
   },
   data() {
     return {

@@ -132,7 +132,6 @@ export default {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  
 }
 .shopArr > * {
   display: flex;

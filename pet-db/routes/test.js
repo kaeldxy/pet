@@ -40,6 +40,16 @@ router.post('/addpet', async (req, res, next) => {
     await petModel.insertMany(data)
     res.send('1')
 })
+router.post('/addusers', async (req, res, next) => {
+    const { users } = req.body
+    await userModel.insertMany(users)
+    res.send('1')
+})
+router.post('/addAddr', async (req, res, next) => {
+    const { addrs } = req.body
+    await addrModel.insertMany(addrs)
+    res.send('1')
+})
 /// 塞数据
 
 router.post('/addpetmid', async (req, res, next) => {

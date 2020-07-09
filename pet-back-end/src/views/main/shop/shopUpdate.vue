@@ -1,6 +1,11 @@
 <template>
   <div class="shopUpdataBox">
-    <a-form-model class="shopUpdataForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-model
+      class="shopUpdataForm"
+      :model="form"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+    >
       <a-form-model-item label="门店名称">
         <a-input v-model="form.name" />
       </a-form-model-item>
@@ -14,11 +19,16 @@
         <a-input v-model="form.desc" type="textarea" />
       </a-form-model-item>
       <a-form-model-item label="门店图片">
-        <uploadFile v-model="shopFile" :images="form.images"
-          :baseUrl="src" :multe="true" fileName="shopImgs" />
+        <uploadFile
+          v-model="shopFile"
+          :images="form.images"
+          :baseUrl="src"
+          :multe="true"
+          fileName="shopImgs"
+        />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmit">添加</a-button>
+        <a-button type="primary" @click="onSubmit">修改</a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
@@ -43,15 +53,15 @@ export default {
         images: [""]
       },
       shopFile: new FormData(),
-      src:''
+      src: ""
     };
   },
   mounted() {
     this.form = this.$router.currentRoute.params;
-    if(this.form.images)
-    this.src= /http/.test(this.form.images[0]) ? "" : "/api/";
-    },
-  
+    if (this.form.images)
+      this.src = /http/.test(this.form.images[0]) ? "" : "/api/";
+  },
+
   computed: {
     adminId() {
       return this.$store.state.currentAdmin._id;
@@ -66,12 +76,16 @@ export default {
         { adminId: this.adminId },
         { images: patharr }
       );
-      const { statu, msg } = await shopService.updataShop(addData);
-      if (statu) {
-        this.$message.info(msg);
-        this.$router.replace({ name: "ShopList" });
+      if (addData.images[0]) {
+        const { statu, msg } = await shopService.updataShop(addData);
+        if (statu) {
+          this.$message.info(msg);
+          this.$router.replace({ name: "ShopList" });
+        } else {
+          this.$message.info("修改失败！");
+        }
       } else {
-        this.$message.info("添加失败！");
+        this.$message.info("请添加图片！");
       }
     }
   }
@@ -79,7 +93,7 @@ export default {
 </script>
 
 <style>
-.shopUpdataBox{
+.shopUpdataBox {
   width: 800px;
 }
 </style>

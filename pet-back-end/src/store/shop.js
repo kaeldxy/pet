@@ -7,23 +7,20 @@ export default {
     rows: [],
   },
   mutations: {
-    getShop(state, payload) {
-      Object.assign(state, {
-        count: payload.count,
-        rows: [...payload.rows],
-      });
-    },
+    assign: (state, payload) =>  Object.assign(state, payload)
   },
   actions: {
-    getShops: async ({ commit, rootState }, { page = 1, limit = 10 }) => {
-      const { _id: adminId, position } = rootState.currentAdmin
-      let data;
+    getShops: async ({ commit, rootState }, payload) => {
+      let data; 
+      const position = rootState.currentAdmin.position
       if (position === 'plat') {
-        data = await shopServer.getShops({ page, limit })
+        data = await shopServer.getShops(payload)
       } else {
+        const { _id: adminId } = rootState.currentAdmin
+        const {page, limit} = payload
         data = await shopServer.getShops({ page, limit, adminId });
-      }
-      commit("getShop", data);
+      }      
+      commit("assign", data);
     },
     delShop: async (context, payload) => await shopServer.delShop(payload),
   },

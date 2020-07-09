@@ -57,19 +57,23 @@ export default {
         { adminId: this.adminId },
         { images: patharr }
       );
-      const { statu, msg } = await shopService.addShops(addData);
-      if (statu) {
-        this.$message.info(msg);
-        this.$router.replace({ name: "ShopList" });
+      if (addData.images[0]) {
+        const { statu, msg } = await shopService.addShops(addData);
+        if (statu) {
+          this.$message.info(msg);
+          this.$router.replace({ name: "ShopList" });
+        } else {
+          this.$message.info("添加失败！");
+        }
       } else {
-        this.$message.info("添加失败！");
+        this.$message.info("请添加图片！");
       }
     }
   }
 };
 </script>
 <style>
-.shopAddBox{
+.shopAddBox {
   width: 800px;
 }
 </style>

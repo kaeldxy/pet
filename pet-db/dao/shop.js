@@ -1,14 +1,14 @@
 const shopModel = require("./models/shopModel");
+
 const dao = {};
 
 dao.findShop = async ({ page, limit, adminId }) => {
-    let result = await shopModel.find({}).lean()
+    let result;
     page = ~~page;
     limit = ~~limit;
-    if (adminId) { result = result.filter(item => item.adminId == adminId) }
-    const rows = result.slice((page - 1) * limit, (limit * page))
-    const count = result.length
-    return { rows, count };
+    result = await shopModel.find({adminId}).skip((page - 1) * limit).limit(limit)
+    const count = await shopModel.find({adminId}).countDocuments()
+    return { rows: result, count };
 }
 dao.del = async ({ _id }) => {
     const { deletedCount } = await shopModel.deleteOne({ _id });

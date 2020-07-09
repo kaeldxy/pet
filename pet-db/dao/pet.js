@@ -1,7 +1,6 @@
 
 const petModel = require("./models/petModel");
 const petmidModel = require("./models/petmidModel");
-const user = require("./user");
 
 const dao = {};
 

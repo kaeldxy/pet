@@ -16,6 +16,8 @@ var testRouter = require('./routes/test');
 var petRouter = require('./routes/pet');
 var addrRouter = require('./routes/addr');
 var orderRouter = require('./routes/order');
+var relatedRouter = require('./routes/related');
+
 
 require('./dao/db.js')
 const jwtAuth = require('./utils/authToken')
@@ -43,7 +45,8 @@ app.use('/shop', shopRouter);
 app.use('/test', testRouter);
 app.use('/pet', petRouter);
 app.use('/addr', addrRouter);
-app.use('/order', orderRouter); // 
+app.use('/order', orderRouter); 
+app.use('/related', relatedRouter); 
 
 
 app.use(function (req, res, next) {

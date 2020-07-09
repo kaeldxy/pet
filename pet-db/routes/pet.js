@@ -10,7 +10,7 @@ router.post('/add', async function (req, res, next) {
     res.send(await petService.add(req.body))
 });
 
-router.get('/get', async function (req, res, next) {
+router.get('/get', async function (req, res, next) {    
     res.send(await petService.get(req.query))
 });
 

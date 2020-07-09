@@ -3,6 +3,7 @@
 const petOrderDao = require('../dao/petOrder.js')
 const myseverOrderDao = require('../dao/myseverOrder.js')
 const goodOrderDao = require('../dao/goodOrder.js')
+const petOrder = require('../dao/petOrder.js')
 
 const allOrderDao = {
     petOrderDao,
@@ -19,7 +20,14 @@ module.exports = {
         limit = ~~limit
         const orderDao = selcetOrderDao(type)
         dependQuery = JSON.parse(dependQuery)
-        return await orderDao.get({ page, limit, dependQuery })
+        if (orderDao) {
+            return await orderDao.get({ page, limit, dependQuery })
+        } else {
+            const petOrders = await petOrderDao.get({ page, limit, dependQuery })
+            const myseverOrders = await myseverOrderDao.get({ page, limit, dependQuery })
+            const goodOrders = await goodOrderDao.get({ page, limit, dependQuery })
+            return { petOrders, myseverOrders, goodOrders }
+        }
     }
 }
 

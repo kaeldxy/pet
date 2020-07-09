@@ -17,7 +17,6 @@ import ShopUpdate from '../views/main/shop/shopUpdate.vue'
 import ShopList from '../views/main/shop/shopList.vue'
 import ShopDetail from '../views/main/shop/shopDetail.vue'
 
-
 import PetAdd from '../views/main/pet/petAdd.vue'
 import PetUpdate from '../views/main/pet/petUpdate.vue'
 import PetList from '../views/main/pet/petList.vue'
@@ -32,6 +31,8 @@ import orderList from '../views/main/order/orderList.vue'
 
 import userList from '../views/main/user/userList.vue'
 import userDetail from '../views/main/user/userDetail.vue'
+
+import censusList from '../views/main/census/censusList.vue'
 
 import Content from '../views/main/content.vue'
 
@@ -136,6 +137,14 @@ const routes = [
           { path: 'list', name: 'orderList', component: orderList },
           { path: 'detail', name: 'orderDetail', component: orderDetail },
           { path: 'update', name: 'orderUpdate', component: orderUpdate },
+        ]
+      },
+      {
+        path: 'census',
+        name: 'census',
+        component: Content,
+        children: [
+          { path: 'list', name: 'censusList', component: censusList },
         ]
       },
     ]

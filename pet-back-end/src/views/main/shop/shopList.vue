@@ -1,20 +1,28 @@
 <template>
-  <div>
-    <a-list :grid="{ gutter: 6, xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 3 }" :data-source="rows">
+  <div class="shopListBox">
+    <a-list
+      class="shopList"
+      :grid="{ gutter: 6, xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 3 }"
+      :data-source="rows"
+    >
       <a-list-item
         slot="renderItem"
         slot-scope="item"
         class="text"
-        style="width: 200px; height: 340px;margin-bottom:20px;"
+        style="width: 300px; height: 200px;margin-bottom:20px;"
       >
         <a-card :title="item.name" @click="detail(item)" style="height:360px;">
           <p style="display: flex;overflow: hidden;">
-            <a-empty v-if="!item.images[0]" style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;" :image="simpleImage" />
+            <a-empty
+              v-if="!item.images[0]"
+              style="height: 100px;width: 115px;margin: 0px 10px;line-height: 50px;"
+              :image="simpleImage"
+            />
             <img
-          v-if="item.images[0]"
-          :src="/http/.test(item.images[0]) ? item.images[0] : '/api/' + item.images[0]"
-          style="width:130px; height:100px; margin: 0 10px"
-        />
+              v-if="item.images[0]"
+              :src="/http/.test(item.images[0]) ? item.images[0] : '/api/' + item.images[0]"
+              style="width:130px; height:100px; margin: 0 10px"
+            />
           </p>
           <p>地址：</p>
           <p class="indentation">{{item.address}}</p>
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-import { Empty } from 'ant-design-vue';
+import { Empty } from "ant-design-vue";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("shop");
 export default {
@@ -69,7 +77,7 @@ export default {
       this.$message.info("删除成功！");
     }
   },
-  created(){
+  created() {
     this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
     this.getShops({});
   },
@@ -85,6 +93,14 @@ export default {
   text-align: left;
   margin: 10px 10px 10px;
   position: relative;
+}
+.shopListBox {
+  width: 100%;
+  height: 100%;
+}
+.shopList {
+  width: 100%;
+  height: 100%;
 }
 .indentation {
   text-indent: 2rem;

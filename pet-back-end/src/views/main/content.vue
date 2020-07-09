@@ -57,6 +57,9 @@ export default {
     currentKey() {
       return [this.currentPath[1]];
     },
+    currentPosition(){
+      return this.$store.state.currentAdmin.position
+    },
     listPath(){
       return this.basePath + this.currentPath[0] + '/list'
     },
@@ -77,7 +80,11 @@ export default {
       }
     },
     isShowAdd(){
-      return !/(order|user)/.test(this.currentPath[0])
+      if(this.currentPosition === 'shop'){
+        return !/(order)/.test(this.currentPath[0])
+      }else{
+        return /(admin)/.test(this.currentPath[0])
+      }
     },
     
     isShowDetail(){

@@ -14,6 +14,7 @@ module.exports = {
             const goodId = item._id.toString()
             item.shop = allShop.filter(item => item.goodId == goodId).map(item => item.shopId)
         })
+        
         return { data, total }
     },
     del: async (_id) => {

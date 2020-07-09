@@ -1,12 +1,12 @@
 <template>
   <div>
     <a-table :columns="columns" :data-source="data" :rowKey="item => item._id" :pagination="false">
-      <a slot="text">详细..</a>
+      <a slot="text" slot-scope="record" @click="detail(record)">详情</a>
       <img
         slot="img"
-        slot-scope="text"
+        slot-scope="image"
         style="display: block; width: 40px; height: 40px;"
-        :src="text"
+        :src="image"
       />
     </a-table>
     <a-pagination
@@ -46,7 +46,6 @@ const columns = [
   },
   {
     title: "Action",
-    dataIndex: "address",
     key: "address 4",
     scopedSlots: { customRender: "text" }
   }
@@ -68,10 +67,13 @@ export default {
       this.total = total;
     },
     pageChange(page, limit) {
-        this.getUserData(page, limit)
+      this.getUserData(page, limit);
     },
-    onShowSizeChange(page, limit){
-        this.getUserData(page, limit)
+    onShowSizeChange(page, limit) {
+      this.getUserData(page, limit);
+    },
+    detail(user) {
+      this.$router.push({ name: "userDetail", params: user });
     }
   },
   created() {

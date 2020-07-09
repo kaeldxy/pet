@@ -18,7 +18,7 @@ const myseverOrderModel = require('../dao/models/myseverOrderModel.js')
 const goodOrderModel = require('../dao/models/goodOrderModel.js')
 const goodmidModel = require('../dao/models/goodmidModel');
 const myseverOrder = require('../dao/myseverOrder');
-
+const adminModel = require('../dao/models/adminModel')
 
 router.post('/addshop', async (req, res, next) => {
     const { data } = req.body
@@ -38,6 +38,16 @@ router.post('/addmysever', async (req, res, next) => {
 router.post('/addpet', async (req, res, next) => {
     const { data } = req.body
     await petModel.insertMany(data)
+    res.send('1')
+})
+router.post('/addusers', async (req, res, next) => {
+    const { users } = req.body
+    await userModel.insertMany(users)
+    res.send('1')
+})
+router.post('/addAddr', async (req, res, next) => {
+    const { addrs } = req.body
+    await addrModel.insertMany(addrs)
     res.send('1')
 })
 /// 塞数据
@@ -66,7 +76,15 @@ router.get('/getShopId', async (req, res, next) => {
     shopIds = shopIds.map(item => item._id)
     res.send({ shopIds })
 })
-
+router.get('/getAdminId', async (req, res, next) => {
+    let adminIds = await adminModel.find({position: 'shop'}).lean()
+    adminIds = adminIds.map(item => item._id)
+    res.send({ adminIds })
+})
+router.get('/getAdmin', async (req, res, next) => {
+    let admins = await adminModel.find({position: 'shop'}).lean()
+    res.send({ admins })
+})
 router.get('/getPetId', async (req, res, next) => {
     const { adminId } = req.query
     let petIds = await petModel.find({ adminId }).lean()

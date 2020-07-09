@@ -23,43 +23,57 @@
         <span slot="tab">
           <a-icon type="goods" />商品管理
         </span>
-        <Good />
+        <Goods :rows="this.rows"/>
       </a-tab-pane>
       <a-tab-pane key="2">
         <span slot="tab">
           <a-icon type="service" />服务管理
         </span>
-        <MySever />
+        <MySever :rows="this.rows"/>
       </a-tab-pane>
       <a-tab-pane key="3">
         <span slot="tab">
           <a-icon type="put" />宠物管理
         </span>
-        <Pets />
+        <Pets :rows="this.rows"/>
       </a-tab-pane>
     </a-tabs>
   </div>
 </template>
 
 <script>
-import Pets from "../pet/petList";
-import MySever from "../mysever/myseverList";
-import Good from "../good/goodList";
+import Pets from "../../../components/shop/petList";
+import MySever from "../../../components/shop/myseverList";
+import Goods from "../../../components/shop/goodList";
 import { Empty } from 'ant-design-vue';
+import relatedService from "../../../service/related";
 export default {
-  components: { Good, MySever, Pets },
+  components: { Pets,Goods,MySever },
   created() {
     this.shop = this.$router.currentRoute.params;
     this.simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
   },
+  async mounted(){
+    const shopId=this.shop._id
+    const {data} = await relatedService.get({type:'good',shopId})
+    this.rows = data.map((item)=>item[`goodId`])
+    console.log(this.rows);
+    
+  },
   data() {
     return {
       shop: {},
+      rows:[],
     };
   },
   methods: {
-    callback(key) {
-      console.log(key);
+   async callback(key) {
+    let type;
+    key==1?type='good':key==2?type='mysever':type="pet";
+    const shopId=this.shop._id
+    const {data} = await relatedService.get({type,shopId})
+    this.rows = data.map((item)=>item[`${type}Id`])
+    console.log(this.rows);
     }
   }
 };

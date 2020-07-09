@@ -12,226 +12,173 @@
     <script src="http://mockjs.com/dist/mock.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script>
-        const adminIds = [
-            '5eff170e6533f017d8404197',
-            '5eff17666533f017d8404198',
-            '5eff17836533f017d8404199',
-            '5eff17a16533f017d840419a',
-            '5eff17bd6533f017d840419b',
-            '5eff17e16533f017d840419c',
-            '5eff18066533f017d840419d',
-            '5eff18766533f017d840419e',
-            '5f000dd90869cb2a78533ff2',
-            '5f0013bd0869cb2a78533ff3',
-            '5f0014cc0869cb2a78533ff4',
-            '5eff114a6533f017d8404190',
-            '5efe995b7850832bb8036992',
-        ]
-            // const shop = Mock.mock({
-            //     'shop|100': [
-            //         {
-            //             'name|1': ['爱心小屋', '宠猫之家', '爱宠生活', '狗狗小屋', '宠物之家', '喵星球', '汪星球', '暖暖小床', '爱心小喵'],        // 名称
-            //             address: '@city(true)',    // 商品种类（主粮/零食/玩具/日常用品/药品...）
-            //             telephone: /^1[3-9]\d{9}$/,       // 价格
-            //             desc: '@cparagraph(4)',        // 商品描述
-            //             images: ['@image','@image','@image','@image','@image',],
-            //             'adminId|1': [
-            //                 '5eff170e6533f017d8404197',
-            //                 '5eff17666533f017d8404198',
-            //                 '5eff17836533f017d8404199',
-            //                 '5eff17a16533f017d840419a',
-            //                 '5eff17bd6533f017d840419b',
-            //                 '5eff17e16533f017d840419c',
-            //                 '5eff18066533f017d840419d',
-            //                 '5eff18766533f017d840419e',
-            //                 '5f000dd90869cb2a78533ff2',
-            //                 '5f0013bd0869cb2a78533ff3',
-            //                 '5f0014cc0869cb2a78533ff4',
-            //                 '5eff114a6533f017d8404190',
-            //                 '5efe995b7850832bb8036992',
-            //             ],
-            //         }
-            //     ]
-            // }).shop  //addgood  addmysever   addpet
-            // axios.post('/test/addshop', {data: shop})
+        // ;(async () => {
+        //     const {
+        //         adminIds
+        //     } = await axios.get('/test/getAdminId').then(res => res.data)
 
+        //     const shop = Mock.mock({
+        //         'shop|100': [{
+        //             'name|1': ['爱心小屋', '宠猫之家', '爱宠生活', '狗狗小屋', '宠物之家', '喵星球', '汪星球', '暖暖小床',
+        //                 '爱心小喵'
+        //             ], // 名称
+        //             address: '@city(true)', // 商品种类（主粮/零食/玩具/日常用品/药品...）
+        //             telephone: /^1[3-9]\d{9}$/, // 价格
+        //             desc: '@cparagraph(4)', // 商品描述
+        //             images: ['@image', '@image', '@image', '@image', '@image', ],
+        //             'adminId|1': adminIds
+        //         }]
+        //     }).shop //addgood  addmysever   addpet
+        //     await axios.post('/test/addshop', {
+        //         data: shop
+        //     })
 
-            // const good = Mock.mock({
-            //     'good|100': [
-            //         {
-            //             'name|1': [
-            //                 '狗罐头', '肉干', '咬胶', '梳子', '指甲剪', '窝', '牵引带', '玩具', '衣服', '驱虫药', '滴耳液', '洗眼液', '皮肤病药品'
-            //             ],
-            //             'pet|1': ['猫', '狗', '其他'],
-            //             'classify|1': ['主粮', '零食', '玩具', '日常用品', '药品'],    // 商品种类（主粮/零食/玩具/日常用品/药品...）
-            //             'price|50-500': 0,       // 价格
-            //             'weight|20-50': 0,      // 重量
-            //             production: "@datetime('yyyy-MM-dd HH:mm:ss')",  // 生产日期
-            //             'shelfLife|6-24': 0,   // 保质期
-            //             producer: '@city(true)',    // 产地
-            //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],       // 商品图片（列表图/详情图...）
-            //             desc: '@cparagraph(4)',        // 商品描述
-            //             'adminId|1': [
-            //                 '5eff170e6533f017d8404197',
-            //                 '5eff17666533f017d8404198',
-            //                 '5eff17836533f017d8404199',
-            //                 '5eff17a16533f017d840419a',
-            //                 '5eff17bd6533f017d840419b',
-            //                 '5eff17e16533f017d840419c',
-            //                 '5eff18066533f017d840419d',
-            //                 '5eff18766533f017d840419e',
-            //                 '5f000dd90869cb2a78533ff2',
-            //                 '5f0013bd0869cb2a78533ff3',
-            //                 '5f0014cc0869cb2a78533ff4',
-            //                 '5eff114a6533f017d8404190',
-            //                 '5efe995b7850832bb8036992',
-            //             ],
-            //         }
-            //     ]
-            // }).good
-            // axios.post('/test/addgood', {data: good})
+        //     const good = Mock.mock({
+        //         'good|100': [{
+        //             'name|1': [
+        //                 '狗罐头', '肉干', '咬胶', '梳子', '指甲剪', '窝', '牵引带', '玩具', '衣服', '驱虫药',
+        //                 '滴耳液', '洗眼液', '皮肤病药品'
+        //             ],
+        //             'pet|1': ['猫', '狗', '其他'],
+        //             'classify|1': ['主粮', '零食', '玩具', '日常用品', '药品'], // 商品种类（主粮/零食/玩具/日常用品/药品...）
+        //             'price|50-500': 0, // 价格
+        //             'weight|20-50': 0, // 重量
+        //             production: "@datetime('yyyy-MM-dd HH:mm:ss')", // 生产日期
+        //             'shelfLife|6-24': 0, // 保质期
+        //             producer: '@city(true)', // 产地
+        //             images: ['@image', '@image', '@image', '@image', '@image',
+        //                 '@image'
+        //             ], // 商品图片（列表图/详情图...）
+        //             desc: '@cparagraph(4)', // 商品描述
+        //             'adminId|1': adminIds
+        //         }]
+        //     }).good
+        //     await axios.post('/test/addgood', {
+        //         data: good
+        //     })
 
+        //     const pet = Mock.mock({
+        //         'pet|100': [{
+        //             'name|1': [
+        //                 '小贝', 'Angel', '虎虎', '雅虎', '混混', '小狼', '小虎', '李小熊', '大奔', '达达妹',
+        //                 '咪妹', '麒麟', '谜底', 'KA', '波利', '彼利', '贝茜', '黑妮'
+        //             ], // 名称
+        //             'classify|1': ['狗', '猫', '龙猫', '仓鼠', '金鱼', '虾', '松鼠', '鹦鹉'], // 宠物品种
+        //             'price|50-500': 0, // 价格
+        //             'weight|20-50': 0, // 重量
+        //             'age|1-10': 0, // 年龄
+        //             images: ['@image', '@image', '@image', '@image', '@image',
+        //                 '@image'
+        //             ], // 宠物图片
+        //             desc: '@cparagraph(4)', // 宠物描述
+        //             'adminId|1': adminIds
+        //         }]
+        //     }).pet
+        //     await axios.post('/test/addpet', {
+        //         data: pet
+        //     })
 
+        //     const mysever = Mock.mock({
+        //         'mysever|100': [{
+        //             name: '宠物服务', // 名称
+        //             'classify|1': ['洗澡', '游泳', '修毛', '驱虫', '美容'], // 服务种类（洗澡/游泳/修毛/驱虫...）
+        //             'pet|1': ['全部', '猫', '狗', '其他'], // 适用宠物（全部/猫/狗/其他）
+        //             'price|50-500': 0, // 服务价格
+        //             desc: '@cparagraph(4)', // 服务描述
+        //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],
+        //             'adminId|1': adminIds
+        //         }]
+        //     }).mysever
+        //     await axios.post('/test/addmysever', {
+        //         data: mysever
+        //     })
+        // })();
+        // const users = Mock.mock({
+        //     'users|50': [{
+        //         username: /\w{4,6}/, // 用户名
+        //         pwd: /\w{5}/, // 密码
+        //         name: '@cname', // 真实姓名
+        //         phone: /1[3-9]\d{9}/, // 联系电话
+        //         image: '@image' // 用户头像
+        //     }]
+        // }).users
+        // axios.post('/test/addusers', {users}).then(res => {console.log(res.data)})
 
+        // getShopId  getPetId  getGoodId  getMyseverId   
+        // addpetmid: allpetmids  addgoodmid: allgoodmids  addmysevermid: allmysevermids
 
-            // const pet = Mock.mock({
-            //     'pet|100': [
-            //         {
-            //             'name|1': [
-            //                 '小贝', 'Angel', '虎虎', '雅虎', '混混', '小狼', '小虎', '李小熊', '大奔', '达达妹', '咪妹', '麒麟', '谜底', 'KA', '波利', '彼利', '贝茜', '黑妮'
-            //             ],        // 名称
-            //             'classify|1': ['狗', '猫', '龙猫', '仓鼠', '金鱼', '虾', '松鼠', '鹦鹉'],    // 宠物品种
-            //             'price|50-500': 0,        // 价格
-            //             'weight|20-50': 0,       // 重量
-            //             'age|1-10': 0,         // 年龄
-            //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],    // 宠物图片
-            //             desc: '@cparagraph(4)',        // 宠物描述
-            //             'adminId|1': [
-            //                 '5eff170e6533f017d8404197',
-            //                 '5eff17666533f017d8404198',
-            //                 '5eff17836533f017d8404199',
-            //                 '5eff17a16533f017d840419a',
-            //                 '5eff17bd6533f017d840419b',
-            //                 '5eff17e16533f017d840419c',
-            //                 '5eff18066533f017d840419d',
-            //                 '5eff18766533f017d840419e',
-            //                 '5f000dd90869cb2a78533ff2',
-            //                 '5f0013bd0869cb2a78533ff3',
-            //                 '5f0014cc0869cb2a78533ff4',
-            //                 '5eff114a6533f017d8404190',
-            //                 '5efe995b7850832bb8036992',
-            //             ],
-            //         }
-            //     ]
-            // }).pet
-            // axios.post('/test/addpet', {data: pet})
-
-
-
-            // const mysever = Mock.mock({
-            //     'mysever|100': [
-            //         {
-            //             name: '宠物服务',         // 名称
-            //             'classify|1': ['洗澡', '游泳', '修毛', '驱虫', '美容'],     // 服务种类（洗澡/游泳/修毛/驱虫...）
-            //             'pet|1': ['全部', '猫', '狗', '其他'],          // 适用宠物（全部/猫/狗/其他）
-            //             'price|50-500': 0,       // 服务价格
-            //             desc: '@cparagraph(4)',        // 服务描述
-            //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],
-            //             'adminId|1': [
-            //                 '5eff170e6533f017d8404197',
-            //                 '5eff17666533f017d8404198',
-            //                 '5eff17836533f017d8404199',
-            //                 '5eff17a16533f017d840419a',
-            //                 '5eff17bd6533f017d840419b',
-            //                 '5eff17e16533f017d840419c',
-            //                 '5eff18066533f017d840419d',
-            //                 '5eff18766533f017d840419e',
-            //                 '5f000dd90869cb2a78533ff2',
-            //                 '5f0013bd0869cb2a78533ff3',
-            //                 '5f0014cc0869cb2a78533ff4',
-            //                 '5eff114a6533f017d8404190',
-            //                 '5efe995b7850832bb8036992',
-            //             ],
-            //         }
-            //     ]
-            // }).mysever
-            // axios.post('/test/addmysever', {data: mysever})
+        // (async () => {
+        //     const {
+        //         adminIds
+        //     } = await axios.get('/test/getAdminId').then(res => res.data)
+        //     const len = adminIds.length;
+        //     const allgoodmids = []
+        //     for (let i = 0; i < len; i++) {
+        //         const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: adminIds[i] } }).then(res => res.data)
+        //         const { goodIds } = await axios.get('/test/getgoodId', { params: { adminId: adminIds[i] } }).then(res => res.data)
+        //         const shoplen = shopIds.length
+        //         goodIds.forEach(goodId => {
+        //             _.sampleSize(shopIds, _.random(0, shoplen)).forEach(shopId => {
+        //                 allgoodmids.push({ goodId, shopId })
+        //             })
+        //         });
+        //     }
+        //     const res = await axios.post('/test/addgoodmid', { allgoodmids }).then(res => res.data)
+        //     console.log(res);
+        // })();
+        // 添加中间表  根据adminId 获取到门店ID，和 宠物ID
 
 
 
 
-            // getShopId  getPetId  getGoodId  getMyseverId   
-            // addpetmid: allpetmids  addgoodmid: allgoodmids  addmysevermid: allmysevermids
-            // const len = adminIds.length;
-            // (async () => {
-            //     const allmysevermids = []
-            //     for (let i = 0; i < len; i++) {
-            //         const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: adminIds[i] } }).then(res => res.data)
-            //         const { myseverIds } = await axios.get('/test/getMyseverId', { params: { adminId: adminIds[i] } }).then(res => res.data)
-            //         const shoplen = shopIds.length
-            //         myseverIds.forEach(myseverId => {
-            //             _.sampleSize(shopIds, _.random(0, shoplen)).forEach(shopId => {
-            //                 allmysevermids.push({ myseverId, shopId })
-            //             })
-            //         });
-            //     }
-            //     const res = await axios.post('/test/addmysevermid', { allmysevermids }).then(res => res.data)
-            //     console.log(res);
-            // })();
-            // 添加中间表  根据adminId 获取到门店ID，和 宠物ID
+        // (async () => {
+        //     const { userIds } = await axios.get('/test/getUserId').then(res => res.data)
+        //     const addrs = Mock.mock({
+        //         'addrs|200': [
+        //             {
+        //                 name: '@cname',      // 收件人名称
+        //                 phone: /^1[3-9]\d{9}/,     // 收件人联系电话
+        //                 address: '@county(true)',    // 收件人地址
+        //                 'userId|1': userIds,
+        //             }
+        //         ]
+        //     }).addrs
+        //     axios.post('/test/addAddr', { addrs })
+        // })()
+        
 
 
 
-
-            // (async () => {
-            //     const { userIds } = await axios.get('/test/testGetUser').then(res => res.data)
-            //     console.log(userIds);
-            //     const addrs = Mock.mock({
-            //         'addrs|200': [
-            //             {
-            //                 name: '@cname',      // 收件人名称
-            //                 phone: /^1[3-9]\d{9}/,     // 收件人联系电话
-            //                 address: '@county(true)',    // 收件人地址
-            //                 'userId|1': userIds,
-            //             }
-            //         ]
-            //     }).addrs
-            //     axios.post('/test/testAddr', { addrs })
-            // })()
-            //添加地址列表
-
-
-
-            // adminIds
-            // getAddrId  getShopId  getPetId  getGoodId  getMyseverId  getUserId
-            // ;(async () => {
-            //     const { userIds } = await axios.get('/test/getUserId').then(res => res.data)
-
-            //     const first = Mock.mock({
-            //         'first|300': [
-            //             {
-            //                 'userId|1': userIds,
-            //                 'adminId|1': adminIds,
-            //                 'num|1-7': 0,
-            //                 time: "@datetime('yyyy-MM-dd HH:mm:ss')",
-            //                 'status|1': ['已付款', '待付款', '待评价', '已评价', '运输中', '已送达']
-            //             }
-            //         ]
-            //     }).first
-            //     for (let i = 0; i < first.length; i++) {
-            //         const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: first[i].adminId } }).then(res => res.data)
-            //         const { addrIds } = await axios.get('/test/getAddrId', { params: { userId: first[i].userId } }).then(res => res.data)
-            //         const shopId = _.sample(shopIds)
-            //         const addrId = _.sample(addrIds)
-            //         Object.assign(first[i], { shopId, addrId })
-            //         const { myseverIds } = await axios.get('/test/getMyseverIdByShopId', { params: { shopId } }).then(res => res.data)
-            //         Object.assign(first[i], { myseverId: _.sample(myseverIds) })
-            //     }
-            //     const arr = first.filter(item => item.myseverId)
-            //     const data = await axios.post('/test/addMyseverOrder', { myseverOrders: arr }).then(res => res.data)
-            //     console.log(arr);
-            // })()
-
+        // adminIds
+        // getAddrId  getShopId  getPetId  getGoodId  getMyseverId  getUserId
+        (async () => {
+            const { userIds } = await axios.get('/test/getUserId').then(res => res.data)
+            const { adminIds } = await axios.get('/test/getAdminId').then(res => res.data)
+            const first = Mock.mock({
+                'first|300': [
+                    {
+                        'userId|1': userIds,
+                        'adminId|1': adminIds,
+                        'num|1-7': 0,
+                        time: "@datetime('yyyy-MM-dd HH:mm:ss')",
+                        'status|1': ['已付款', '待付款', '待评价', '已评价', '运输中', '已送达']
+                    }
+                ]
+            }).first
+            for (let i = 0; i < first.length; i++) {
+                const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: first[i].adminId } }).then(res => res.data)
+                const { addrIds } = await axios.get('/test/getAddrId', { params: { userId: first[i].userId } }).then(res => res.data)
+                const shopId = _.sample(shopIds)
+                const addrId = _.sample(addrIds)
+                Object.assign(first[i], { shopId, addrId })
+                const { petIds } = await axios.get('/test/getPetIdByShopId', { params: { shopId } }).then(res => res.data)
+                Object.assign(first[i], { petId: _.sample(petIds) })
+            }
+            const arr = first.filter(item => item.petId)
+            const data = await axios.post('/test/addPetOrder', { petOrders: arr }).then(res => res.data)
+            console.log(arr);
+        })()
+        // 添加订单
 
 
 
@@ -257,125 +204,11 @@
         //     console.log(res.data);
         // })
 
-        // const shop = Mock.mock({
-        //     'shop|100': [
-        //         {
-        //             'name|1': ['爱心小屋', '宠猫之家', '爱宠生活', '狗狗小屋', '宠物之家', '喵星球', '汪星球', '铲屎之家'],        // 名称
-        //             address: '@city(true)',    // 商品种类（主粮/零食/玩具/日常用品/药品...）
-        //             telephone: /^1[3-9]\d{9}$/,       // 价格
-        //             desc: '@cparagraph(4)',        // 商品描述
-        //             images: ['@image','@image','@image','@image','@image'],
-        //             'adminId|1': [
-        //                 '5eff170e6533f017d8404197',
-        //                 '5eff17666533f017d8404198',
-        //                 '5eff17836533f017d8404199',
-        //                 '5eff17a16533f017d840419a',
-        //                 '5eff17bd6533f017d840419b',
-        //                 '5eff17e16533f017d840419c',
-        //                 '5eff18066533f017d840419d',
-        //                 '5eff18766533f017d840419e',
-        //                 '5f000dd90869cb2a78533ff2',
-        //                 '5f0013bd0869cb2a78533ff3',
-        //                 '5f0014cc0869cb2a78533ff4',
-        //                 '5eff114a6533f017d8404190',
-        //                 '5efe995b7850832bb8036992',
-        //             ],
-        //         }
-        //     ]
-        // }).shop
 
-        // const good = Mock.mock({
-        //     'good|100': [
-        //         {
-        //             'name|1': [
-        //                 '狗罐头', '肉干', '咬胶', '梳子', '指甲剪', '窝', '牵引带', '玩具', '衣服', '驱虫药', '滴耳液', '洗眼液', '皮肤病药品'
-        //             ],
-        //             'pet|1': ['猫', '狗', '其他'],
-        //             'classify|1': ['主粮', '零食', '玩具', '日常用品', '药品'],    // 商品种类（主粮/零食/玩具/日常用品/药品...）
-        //             'price|50-500': 0,       // 价格
-        //             'weight|20-50': 0,      // 重量
-        //             production: "@datetime('yyyy-MM-dd HH:mm:ss')",  // 生产日期
-        //             'shelfLife|6-24': 0,   // 保质期
-        //             producer: '@city(true)',    // 产地
-        //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],       // 商品图片（列表图/详情图...）
-        //             desc: '@cparagraph(4)',        // 商品描述
-        //             'adminId|1': [
-        //                 '5eff170e6533f017d8404197',
-        //                 '5eff17666533f017d8404198',
-        //                 '5eff17836533f017d8404199',
-        //                 '5eff17a16533f017d840419a',
-        //                 '5eff17bd6533f017d840419b',
-        //                 '5eff17e16533f017d840419c',
-        //                 '5eff18066533f017d840419d',
-        //                 '5eff18766533f017d840419e',
-        //                 '5f000dd90869cb2a78533ff2',
-        //                 '5f0013bd0869cb2a78533ff3',
-        //                 '5f0014cc0869cb2a78533ff4',
-        //                 '5eff114a6533f017d8404190',
-        //                 '5efe995b7850832bb8036992',
-        //             ],
-        //         }
-        //     ]
-        // }).good
 
-        // const pet = Mock.mock({
-        //     'pet|100': [
-        //         {
-        //             'name|1': [
-        //                 '小贝', 'Angel', '虎虎', '雅虎', '混混', '小狼', '小虎', '李小熊', '大奔', '达达妹', '咪妹', '麒麟', '谜底', 'KA', '波利', '彼利', '贝茜', '黑妮'
-        //             ],        // 名称
-        //             'classify|1': ['狗', '猫', '龙猫', '仓鼠', '金鱼', '虾', '松鼠', '鹦鹉'],    // 宠物品种
-        //             'price|50-500': 0,        // 价格
-        //             'weight|20-50': 0,       // 重量
-        //             'age|1-10': 0,         // 年龄
-        //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],    // 宠物图片
-        //             desc: '@cparagraph(4)',        // 宠物描述
-        //             'adminId|1': [
-        //                 '5eff170e6533f017d8404197',
-        //                 '5eff17666533f017d8404198',
-        //                 '5eff17836533f017d8404199',
-        //                 '5eff17a16533f017d840419a',
-        //                 '5eff17bd6533f017d840419b',
-        //                 '5eff17e16533f017d840419c',
-        //                 '5eff18066533f017d840419d',
-        //                 '5eff18766533f017d840419e',
-        //                 '5f000dd90869cb2a78533ff2',
-        //                 '5f0013bd0869cb2a78533ff3',
-        //                 '5f0014cc0869cb2a78533ff4',
-        //                 '5eff114a6533f017d8404190',
-        //                 '5efe995b7850832bb8036992',
-        //             ],
-        //         }
-        //     ]
-        // }).pet
 
-        // const mysever = Mock.mock({
-        //     'mysever|100': [
-        //         {
-        //             name: '宠物服务',         // 名称
-        //             'classify|1': ['洗澡', '游泳', '修毛', '驱虫', '美容'],     // 服务种类（洗澡/游泳/修毛/驱虫...）
-        //             'pet|1': ['全部', '猫', '狗', '其他'],          // 适用宠物（全部/猫/狗/其他）
-        //             'price|50-500': 0,       // 服务价格
-        //             desc: '@cparagraph(4)',        // 服务描述
-        //             images: ['@image', '@image', '@image', '@image', '@image', '@image'],
-        //             'adminId|1': [
-        //                 '5eff170e6533f017d8404197',
-        //                 '5eff17666533f017d8404198',
-        //                 '5eff17836533f017d8404199',
-        //                 '5eff17a16533f017d840419a',
-        //                 '5eff17bd6533f017d840419b',
-        //                 '5eff17e16533f017d840419c',
-        //                 '5eff18066533f017d840419d',
-        //                 '5eff18766533f017d840419e',
-        //                 '5f000dd90869cb2a78533ff2',
-        //                 '5f0013bd0869cb2a78533ff3',
-        //                 '5f0014cc0869cb2a78533ff4',
-        //                 '5eff114a6533f017d8404190',
-        //                 '5efe995b7850832bb8036992',
-        //             ],
-        //         }
-        //     ]
-        // }).mysever
+
+
 
         // axios.post('/test/testshop', { data: shop })
         // axios.post('/test/testgood', { data: good })

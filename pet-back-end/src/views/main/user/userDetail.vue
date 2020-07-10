@@ -199,7 +199,11 @@ tr:last-child td {
   height: 60px;
   text-align: left;
   line-height: 60px;
-  font-weight: bold;
-  color: rgb(48, 46, 49);
+  font-size: 17px;
+  font-weight: bolder;
+  color: rgb(221, 210, 210);
+  background: linear-gradient(to right, rgb(56, 50, 50), rgb(150, 150, 165));
+  padding-left: 20px;
+  margin: 0;
 }
 </style>

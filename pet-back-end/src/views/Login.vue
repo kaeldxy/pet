@@ -1,5 +1,8 @@
 <template>
   <div class="loginPage">
+    <h1>
+      宠物管理系统
+    </h1>
     <a-form-model class="loginForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-model-item label="账号">
         <a-input v-model="form.account" />
@@ -55,15 +58,27 @@ export default {
 }
 </script>
 
-<style  scoped>
-.loginPage{
+<style>
+.loginPage, .regPage{
   display:flex;
   width: 100%;
   height: 100vh;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  background: url('../assets/bg.jpg') top center/cover;
+}
+.loginPage>h1, .regPage>h1{
+  height: 500px;
+  color: white;
+  width: 600px;
+  text-shadow: 4px 4px 5px rgb(156, 53, 53);
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 45px;
+  letter-spacing: 4px;
 }
 .loginForm{
-  width: 45%;
+  width: 35%;
+  padding-right: 100px;
+  /* border: 1px solid black; */
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
   <div class="regPage">
+    <h1>
+      宠物管理系统
+    </h1>
     <a-form-model class="regForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-model-item label="账号">
         <a-input v-model="form.account" />
@@ -34,6 +37,7 @@
         <router-link to="/" style="margin-left: 10px;">去登录</router-link>
       </a-form-model-item>
     </a-form-model>
+    
   </div>
 </template>
 <script>
@@ -86,14 +90,9 @@ export default {
 };
 </script>
 
-<style scoped>
-.regPage {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.regForm {
-  width: 45%;
+<style>
+.regForm{
+  padding-right: 200px !important;
+  width: 40%;
 }
 </style>

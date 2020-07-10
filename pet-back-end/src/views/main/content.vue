@@ -1,8 +1,8 @@
 <template>
   <div class="mycontent">
     <div class="nav-top">
-      <a-menu v-model="currentKey" class="insidenav" mode="horizontal">
-        <a-menu-item key="list">
+      <a-menu :select="handleSelect" v-model="currentKey" class="insidenav" mode="horizontal">
+        <a-menu-item key="list" v-if="isShowList">
           <router-link class="navItem" :to="listPath">
             <a-icon type="mail" />
             <span class="keyWord1">{{keyWords[currentPath[0]]}}</span>
@@ -30,6 +30,24 @@
             <span class="keyWord2">  {{  keyWords['detail']}}</span>
           </router-link>
         </a-menu-item>
+        <a-menu-item key="order" v-if="isShowStatistic">
+          <router-link class="navItem" to="/info/statistic/order">
+            <a-icon type="appstore" />
+            <span class="keyWord1">年度销量分析</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="user" v-if="isShowStatistic">
+          <router-link class="navItem" to="/info/statistic/user">
+            <a-icon type="appstore" />
+            <span class="keyWord1">用户产品分析</span>
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="shop" v-if="isShowStatistic">
+          <router-link class="navItem" to="/info/statistic/shop">
+            <a-icon type="appstore" />
+            <span class="keyWord1">门店分布图</span>
+          </router-link>
+        </a-menu-item>
       </a-menu>
     </div>
     <div class="mycontent-box">
@@ -42,7 +60,9 @@
 export default {
   data() {
     return {
-      basePath: "/info/"
+      basePath: "/info/",
+      percent: 0,
+      showLoading: true
     };
   },
   computed: {
@@ -72,12 +92,18 @@ export default {
     detailPath(){
       return this.basePath + this.currentPath[0] + '/detail'
     },
+    isShowList(){
+      return this.currentPath[0] !== 'statistic'
+    },
     isShowUpdate(){
       if(this.currentPath[0] === 'user'){
         return false
       }else{
         return this.currentPath[1] === 'update'
       }
+    },
+    isShowStatistic(){
+      return this.currentPath[0] === 'statistic'
     },
     isShowAdd(){
       if(this.currentPosition === 'shop'){
@@ -86,7 +112,6 @@ export default {
         return /(admin)/.test(this.currentPath[0])
       }
     },
-    
     isShowDetail(){
       if(/(order|user|shop)/.test(this.currentPath[0])){
         return this.currentPath[1] === 'detail'
@@ -94,6 +119,12 @@ export default {
       return false
     }
   },
+  methods:{
+    handleSelect(ss){
+      console.log(ss);
+      
+    }
+  }
 };
 </script>
 

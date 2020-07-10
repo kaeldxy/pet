@@ -45,8 +45,8 @@
             <span>订单管理</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="showPlat" key="census">
-          <router-link to="/info/census/list" class="my-nav">
+        <a-menu-item v-if="showPlat" key="statistic">
+          <router-link to="/info/statistic/order" class="my-nav">
             <a-icon type="highlight" />
             <span>图表统计</span>
           </router-link>

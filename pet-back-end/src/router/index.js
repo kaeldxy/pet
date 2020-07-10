@@ -32,7 +32,9 @@ import orderList from '../views/main/order/orderList.vue'
 import userList from '../views/main/user/userList.vue'
 import userDetail from '../views/main/user/userDetail.vue'
 
-import censusList from '../views/main/census/censusList.vue'
+import statisticOrder from '../views/main/statistic/statisticOrder.vue'
+import statisticUser from '../views/main/statistic/statisticUser.vue'
+import statisticShop from '../views/main/statistic/statisticShop.vue'
 
 import Content from '../views/main/content.vue'
 
@@ -140,11 +142,13 @@ const routes = [
         ]
       },
       {
-        path: 'census',
-        name: 'census',
+        path: 'statistic',
+        name: 'statistic',
         component: Content,
         children: [
-          { path: 'list', name: 'censusList', component: censusList },
+          { path: 'order', name: 'statisticOrder', component: statisticOrder },
+          { path: 'user', name: 'statisticUser', component: statisticUser },
+          { path: 'shop', name: 'statisticShop', component: statisticShop },
         ]
       },
     ]

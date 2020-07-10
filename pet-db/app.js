@@ -17,6 +17,7 @@ var petRouter = require('./routes/pet');
 var addrRouter = require('./routes/addr');
 var orderRouter = require('./routes/order');
 var relatedRouter = require('./routes/related');
+var statisticRouter = require('./routes/statistic');
 
 
 require('./dao/db.js')
@@ -36,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-// app.use(jwtAuth);
+app.use(jwtAuth);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
@@ -47,6 +48,7 @@ app.use('/pet', petRouter);
 app.use('/addr', addrRouter);
 app.use('/order', orderRouter); 
 app.use('/related', relatedRouter); 
+app.use('/statistic', statisticRouter); 
 
 
 app.use(function (req, res, next) {

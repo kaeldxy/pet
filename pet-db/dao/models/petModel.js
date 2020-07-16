@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const petSchema = mongoose.Schema({//骨架，结构
     name: String,        // 名称
     classify: String,    // 宠物品种
-    price: String,       // 价格
+    price: Number,       // 价格
     weight: String,      // 重量
     age: String,         // 年龄
     images: [String],    // 宠物图片

@@ -10,10 +10,11 @@ module.exports = {
         limit = ~~limit
         const data = await myseverModel.find({ adminId }).skip((page - 1) * limit).limit(limit).lean()
         const condition = data.map(item => ({ myseverId: item._id }))
-        const allShop = await mysevermidModel.find({ $or: condition }).populate({ path: 'shopId', select: ['name'] }).lean()
+        let allShop = await mysevermidModel.find({ $or: condition }).populate({ path: 'shopId', select: ['name'] }).lean()
+        allShop = allShop.filter(item => item.shopId)
         data.forEach(item => {
             const myseverId = item._id.toString()
-            item.shop = allShop.filter(item => item.myseverId == myseverId).map(item => item.shopId)
+            item.shop = allShop.filter(item => item.myseverId.toString() === myseverId).map(item => item.shopId)
         })
         const total = await myseverModel.find({ adminId }).countDocuments()
         return { data, total }

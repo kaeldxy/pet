@@ -18,6 +18,8 @@ var addrRouter = require('./routes/addr');
 var orderRouter = require('./routes/order');
 var relatedRouter = require('./routes/related');
 var statisticRouter = require('./routes/statistic');
+var tourRouter = require('./routes/tour');
+var carRouter = require('./routes/car');
 
 
 require('./dao/db.js')
@@ -37,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.use(jwtAuth);
+// app.use(jwtAuth);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/mysever', myseverRouter);
@@ -46,9 +48,11 @@ app.use('/shop', shopRouter);
 app.use('/test', testRouter);
 app.use('/pet', petRouter);
 app.use('/addr', addrRouter);
-app.use('/order', orderRouter); 
-app.use('/related', relatedRouter); 
-app.use('/statistic', statisticRouter); 
+app.use('/order', orderRouter);
+app.use('/related', relatedRouter);
+app.use('/statistic', statisticRouter);
+app.use('/tour', tourRouter); 
+app.use('/car', carRouter); 
 
 
 app.use(function (req, res, next) {

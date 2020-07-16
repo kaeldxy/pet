@@ -19,6 +19,9 @@ const goodOrderModel = require('../dao/models/goodOrderModel.js')
 const goodmidModel = require('../dao/models/goodmidModel');
 const myseverOrder = require('../dao/myseverOrder');
 const adminModel = require('../dao/models/adminModel')
+const petCarModel = require('../dao/models/petCarModel')
+const goodCarModel = require('../dao/models/goodCarModel')
+const myseverCarModel = require('../dao/models/myseverCarModel')
 
 router.post('/addshop', async (req, res, next) => {
     const { data } = req.body
@@ -37,13 +40,14 @@ router.post('/addmysever', async (req, res, next) => {
 })
 router.post('/addpet', async (req, res, next) => {
     const { data } = req.body
-    await petModel.insertMany(data)
-    res.send('1')
+    const re = await petModel.insertMany(data)
+    res.send(re)
 })
 router.post('/addusers', async (req, res, next) => {
     const { users } = req.body
-    await userModel.insertMany(users)
-    res.send('1')
+    const re = await userModel.insertMany(users)
+    console.log(re)
+    res.send(re)
 })
 router.post('/addAddr', async (req, res, next) => {
     const { addrs } = req.body
@@ -141,8 +145,8 @@ router.get('/getMyseverIdByShopId', async (req, res, next) => {
 
 router.post('/addPetOrder', async (req, res, next) => {
     const { petOrders } = req.body
-    await petOrderModel.insertMany(petOrders)
-    res.send('1')
+    const re = await petOrderModel.insertMany(petOrders)
+    res.send(re)
 })
 router.post('/addGoodOrder', async (req, res, next) => {
     const { goodOrders } = req.body
@@ -152,6 +156,22 @@ router.post('/addGoodOrder', async (req, res, next) => {
 router.post('/addMyseverOrder', async (req, res, next) => {
     const { myseverOrders } = req.body
     await myseverOrderModel.insertMany(myseverOrders)
+    res.send('1')
+})
+
+router.post('/addMyseverCar', async (req, res, next) => {
+    const { myseverCars } = req.body
+    await myseverCarModel.insertMany(myseverCars)
+    res.send('1')
+})
+router.post('/addPetCar', async (req, res, next) => {
+    const { petCars } = req.body
+    await petCarModel.insertMany(petCars)
+    res.send('1')
+})
+router.post('/addGoodCar', async (req, res, next) => {
+    const { goodCars } = req.body
+    await goodCarModel.insertMany(goodCars)
     res.send('1')
 })
 

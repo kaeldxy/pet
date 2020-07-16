@@ -36,6 +36,7 @@ import statisticOrder from '../views/main/statistic/statisticOrder.vue'
 import statisticUser from '../views/main/statistic/statisticUser.vue'
 import statisticShop from '../views/main/statistic/statisticShop.vue'
 
+
 import Content from '../views/main/content.vue'
 
 

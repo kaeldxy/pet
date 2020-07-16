@@ -9,10 +9,11 @@ module.exports = {
         const data = await goodModel.find({ adminId }).skip((page - 1) * limit).limit(limit).lean()
         const total = await goodModel.find({ adminId }).countDocuments()
         const condition = data.map(item => ({ goodId: item._id }))
-        const allShop = await goodmidModel.find({ $or: condition }).populate({ path: 'shopId', select: 'name' })
+        let allShop = await goodmidModel.find({ $or: condition }).populate({ path: 'shopId', select: 'name' }).lean()
+        allShop = allShop.filter(item => item.shopId)
         data.forEach(item => {
             const goodId = item._id.toString()
-            item.shop = allShop.filter(item => item.goodId == goodId).map(item => item.shopId)
+            item.shop = allShop.filter(item => item.goodId.toString() === goodId).map(item => item.shopId)
         })
         
         return { data, total }

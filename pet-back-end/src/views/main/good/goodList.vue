@@ -17,7 +17,7 @@
       <template
         slot="shop"
         slot-scope="shopArr"
-      >{{shopArr.length === 0 ? '无' : shopArr.map(item => item.name).join('、')}}</template>
+      >{{shopArr.length === 0 ? '无' : shopArr.map(item => item ? item.name : '').join('、')}}</template>
     </a-table>
     <a-pagination
       show-size-changer

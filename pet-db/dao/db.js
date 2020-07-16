@@ -17,5 +17,11 @@ require("./models/petmidModel.js");
 require("./models/shopModel.js");
 require("./models/userModel.js");
 require("./models/addrModel.js");
+require("./models/petCarModel.js");
+require("./models/goodCarModel.js");
+require("./models/myseverCarModel.js");
+require("./models/myseverOrderModel.js");
+require("./models/goodOrderModel.js");
+require("./models/petOrderModel.js");
 
 

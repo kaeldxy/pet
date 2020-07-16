@@ -178,12 +178,9 @@ export default {
     const data = await orderService.get({
       page: 1,
       limit: 10,
-      type: "all",
       dependQuery: { userId: this.userId }
     });
     this.allOrders = data;
-  console.log(data);
-  
   }
 };
 </script>

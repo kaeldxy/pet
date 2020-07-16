@@ -18,10 +18,12 @@ dao.get = async ({ page, limit, adminId }) => {
     const rows = await petModel.find({ adminId }).skip((page - 1) * limit).limit(limit).lean()
     const count = await petModel.find({ adminId }).countDocuments()
     const condition = rows.map(item => ({ petId: item._id }))
-    const allShop = await petmidModel.find({ $or: condition }).populate({ path: 'shopId', select: 'name' }).lean()
+    let allShop = await petmidModel.find({ $or: condition }).populate({ path: 'shopId', select: 'name' }).lean()
+    allShop = allShop.filter(item => item.shopId)
     rows.forEach(item1 => {
-        item1.shop = allShop.filter(item => item.petId == item1._id.toString()).map(item => item.shopId)
+        item1.shop = allShop.filter(item => item.petId.toString() === item1._id.toString()).map(item => item.shopId)
     })
+    
     return { rows, count }
 }
 

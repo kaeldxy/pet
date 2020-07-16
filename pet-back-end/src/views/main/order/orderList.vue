@@ -257,7 +257,7 @@ export default {
     }
   },
   methods: {
-    async getPetOrders(page, limit, type) {
+    async getOrder(page, limit, type) {
       const { data, total } = await orderService.get({
         page,
         limit,
@@ -268,13 +268,13 @@ export default {
       this[`${type}Total`] = total;
     },
     changepet(page, limit) {
-      this.getPetOrders(page, limit, "pet");
+      this.getOrder(page, limit, "pet");
     },
     changemysever(page, limit) {
-      this.getPetOrders(page, limit, "mysever");
+      this.getOrder(page, limit, "mysever");
     },
     changegood(page, limit) {
-      this.getPetOrders(page, limit, "good");
+      this.getOrder(page, limit, "good");
     },
     detail(orderItem, type) {
       this.$router.push({ name: "orderDetail", params: {orderItem, type} });
@@ -284,9 +284,9 @@ export default {
     }
   },
   created() {
-    this.getPetOrders(1, 10, "pet");
-    this.getPetOrders(1, 10, "mysever");
-    this.getPetOrders(1, 10, "good");
+    this.getOrder(1, 10, "pet");
+    this.getOrder(1, 10, "mysever");
+    this.getOrder(1, 10, "good");
   }
 };
 </script>

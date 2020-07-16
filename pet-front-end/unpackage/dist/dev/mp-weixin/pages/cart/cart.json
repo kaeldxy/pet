@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "购物车",
+  "onReachBottomDistance": 5,
+  "usingComponents": {
+    "uni-number-box": "/components/uni-number-box"
+  }
+}

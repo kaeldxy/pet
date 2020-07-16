@@ -145,39 +145,57 @@
         //     }).addrs
         //     axios.post('/test/addAddr', { addrs })
         // })()
-        
 
 
+        // axios.post('/test/addusers', {
+        //     users: [
+        //         {
+        //             username: 'dxy',   // 用户名
+        //             pwd: '123',        // 密码
+        //             name: '董新宇',       // 真实姓名
+        //             phone: '17761236423',      // 联系电话
+        //             image: 'ssss'       // 用户头像
+        //         },
+        //         {
+        //             username: 'dxx',   // 用户名
+        //             pwd: '124',        // 密码
+        //             name: '董新宇2',       // 真实姓名
+        //             phone: '17761236423',      // 联系电话
+        //             image: 'xxxx'       // 用户头像
+        //         },
+        //     ]
+        // }).then(res => {
+        //     console.log(res.data);
+        // })
 
         // adminIds
         // getAddrId  getShopId  getPetId  getGoodId  getMyseverId  getUserId
-        (async () => {
-            const { userIds } = await axios.get('/test/getUserId').then(res => res.data)
-            const { adminIds } = await axios.get('/test/getAdminId').then(res => res.data)
-            const first = Mock.mock({
-                'first|300': [
-                    {
-                        'userId|1': userIds,
-                        'adminId|1': adminIds,
-                        'num|1-7': 0,
-                        time: "@datetime('yyyy-MM-dd HH:mm:ss')",
-                        'status|1': ['已付款', '待付款', '待评价', '已评价', '运输中', '已送达']
-                    }
-                ]
-            }).first
-            for (let i = 0; i < first.length; i++) {
-                const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: first[i].adminId } }).then(res => res.data)
-                const { addrIds } = await axios.get('/test/getAddrId', { params: { userId: first[i].userId } }).then(res => res.data)
-                const shopId = _.sample(shopIds)
-                const addrId = _.sample(addrIds)
-                Object.assign(first[i], { shopId, addrId })
-                const { petIds } = await axios.get('/test/getPetIdByShopId', { params: { shopId } }).then(res => res.data)
-                Object.assign(first[i], { petId: _.sample(petIds) })
-            }
-            const arr = first.filter(item => item.petId)
-            const data = await axios.post('/test/addPetOrder', { petOrders: arr }).then(res => res.data)
-            console.log(arr);
-        })()
+        // addPetCar  addMyseverCar   addGoodCar   petCars  myseverCars  goodCars
+        // getGoodIdByShopId   getMyseverIdByShopId   getPetIdByShopId
+        // (async () => {
+        //     const { userIds } = await axios.get('/test/getUserId').then(res => res.data)
+        //     const { adminIds } = await axios.get('/test/getAdminId').then(res => res.data)
+        //     const first = Mock.mock({
+        //         'first|300': [
+        //             {
+        //                 'userId|1': userIds,
+        //                 'adminId|1': adminIds,
+        //             }
+        //         ]
+        //     }).first
+        //     for (let i = 0; i < first.length; i++) {
+        //         const { shopIds } = await axios.get('/test/getShopId', { params: { adminId: first[i].adminId } }).then(res => res.data)
+        //         const { addrIds } = await axios.get('/test/getAddrId', { params: { userId: first[i].userId } }).then(res => res.data)
+        //         const shopId = _.sample(shopIds)
+        //         const addrId = _.sample(addrIds)
+        //         Object.assign(first[i], { shopId, addrId })
+        //         const { goodIds } = await axios.get('/test/getGoodIdByShopId', { params: { shopId } }).then(res => res.data)
+        //         Object.assign(first[i], { goodId: _.sample(goodIds) })
+        //     }
+        //     const arr = first.filter(item => item.goodId)
+        //     const data = await axios.post('/test/addGoodCar', { goodCars: arr }).then(res => res.data)
+        //     console.log(arr);
+        // })()
         // 添加订单
 
 
